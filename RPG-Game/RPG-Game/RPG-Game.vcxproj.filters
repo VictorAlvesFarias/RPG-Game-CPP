@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Arquivos de Origem">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Recurso">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Utils">
+      <UniqueIdentifier>{53bc4be3-a288-4bc6-a268-4b99e5de24c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Utils\Stack">
+      <UniqueIdentifier>{1c1782af-48d9-4312-9569-64cee338926d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Utils\Queue">
+      <UniqueIdentifier>{8a132161-afc7-4473-8799-7fb6f66d3d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Utils\Randomize">
+      <UniqueIdentifier>{de364653-ff36-41c9-ba6d-d9855e502ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Utils\List">
+      <UniqueIdentifier>{db47e5d1-4502-4be4-b987-d22268637349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Entities">
+      <UniqueIdentifier>{a9004918-8a32-4ac5-b7e7-1c84a9f99b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Screens">
+      <UniqueIdentifier>{f49a79e6-17e8-4dd6-be43-4ac9dc5b7fe8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Utils\Queue\IQueue.h">
+      <Filter>Arquivos de Origem\Utils\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Utils\List\IList.h">
+      <Filter>Arquivos de Origem\Utils\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Utils\Stack\IStack.h">
+      <Filter>Arquivos de Origem\Utils\Stack</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Utils\Queue\Queue.cpp">
+      <Filter>Arquivos de Origem\Utils\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Utils\List\List.cpp">
+      <Filter>Arquivos de Origem\Utils\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Utils\Randomize\Randomize.cpp">
+      <Filter>Arquivos de Origem\Utils\Randomize</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Utils\Stack\Stack.cpp">
+      <Filter>Arquivos de Origem\Utils\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Entities\Inventory.cpp">
+      <Filter>Arquivos de Origem\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Entities\Item.cpp">
+      <Filter>Arquivos de Origem\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Entities\Map.cpp">
+      <Filter>Arquivos de Origem\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Entities\Player.cpp">
+      <Filter>Arquivos de Origem\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Entities\Sqm.cpp">
+      <Filter>Arquivos de Origem\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Screens\InventoryScreen.cpp">
+      <Filter>Arquivos de Origem\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Screens\ItemScreen.cpp">
+      <Filter>Arquivos de Origem\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Screens\MenuScreen.cpp">
+      <Filter>Arquivos de Origem\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Screens\SqmScreen.cpp">
+      <Filter>Arquivos de Origem\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Screens\StartingScreen.cpp">
+      <Filter>Arquivos de Origem\Screens</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

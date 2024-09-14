@@ -1,26 +1,27 @@
 #pragma once
 
+template <typename T>
 class Fila {
 public:
-	Fila();
-	~Fila();
-	bool append(int genérico); //retorna se deu certo?
-	int serve();
-	bool empty();
-	bool full();
-	int size();
-	void clear();
-	int front();
-	int rear();
+    Fila();
+    ~Fila();
+    bool append(T valorGenerico); // Retorna se deu certo
+    T serve();
+    bool empty();
+    bool full();
+    int size();
+    void clear();
+    T front();
+    T rear();
 
 private:
-	struct NodeFila
-	{
-		int valorGenerico;
-		NodeFila* proximoFila;
-	};
+    struct NodeFila {
+        T valorGenerico;
+        NodeFila* proximoFila;
+    };
 
-	int contador;
-	NodeFila* head;
-	NodeFila* tail;
+    int contador;
+    NodeFila* head;
+    NodeFila* tail;
 };
+

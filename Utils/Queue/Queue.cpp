@@ -1,68 +1,96 @@
-#include "FIla.h"
 #include <iostream>
+#include "IQueue.h"
+
 using namespace std;
 
-Fila::Fila() {
-	contador = 0;
-	head = NULL;
-	tail = NULL;
+template <typename T>
+Fila<T>::Fila() {
+    contador = 0;
+    head = nullptr;
+    tail = nullptr;
 }
 
-Fila::~Fila() {
-
+template <typename T>
+Fila<T>::~Fila() {
+    clear();
 }
 
-bool Fila::append(valor) {
-	NodeFila* nodeInsercao;
-	nodeInsercao = new NodeFila;
+template <typename T>
+bool Fila<T>::append(T valorGenerico) {
+    NodeFila* nodeInsercao = new NodeFila;
 
-	if (nodeInsercao == NULL) {
-		cout << "Não foi possível alocar dinâmicamente outro nó" << endl;
-		abort();
-	}
+    if (nodeInsercao == nullptr) {
+        cout << "Não foi possível alocar dinâmicamente outro nó" << endl;
+        abort();
+    }
 
-	nodeInsercao->valorGenerico = valor;
-	nodeInsercao->proximoFila = NULL;
+    nodeInsercao->valorGenerico = valorGenerico;
+    nodeInsercao->proximoFila = nullptr;
 
-	if (head == NULL) {
-		head = nodeInsercao;
-		tail = nodeInsercao;
-	}
-	else {
-		tail->proximoFila = nodeInsercao;
-		tail = nodeInsercao
-	}
-	contador++;
-	return true; //retorno necessário?
+    if (head == nullptr) {
+        head = nodeInsercao;
+        tail = nodeInsercao;
+    }
+    else {
+        tail->proximoFila = nodeInsercao;
+        tail = nodeInsercao;
+    }
+    contador++;
+    return true;
 }
 
-int Fila::serve() {
-	int valorNode;
-	valorNode = head->valorGenerico;
+template <typename T>
+T Fila<T>::serve() {
+    if (head == nullptr) {
+        throw std::out_of_range("A fila está vazia.");
+    }
 
-	NodeFila* auxiliar;
+    T valorNode = head->valorGenerico;
+    NodeFila* auxiliar = head;
+    head = head->proximoFila;
 
-	auxiliar = head
-		head = head->proximoFila;
-
-	delete auxiliar;
-	contador--;
-	return valorNode;
+    delete auxiliar;
+    contador--;
+    return valorNode;
 }
 
-int Fila::front() {
-	return head->valorGenerico;
+template <typename T>
+T Fila<T>::front() {
+    if (head == nullptr) {
+        throw std::out_of_range("A fila está vazia.");
+    }
+    return head->valorGenerico;
 }
 
-int Fila::rear() {
-	return tail->valorGenerico;
+template <typename T>
+T Fila<T>::rear() {
+    if (tail == nullptr) {
+        throw std::out_of_range("A fila está vazia.");
+    }
+    return tail->valorGenerico;
 }
 
-void Fila::clear() {
-	NodeFila* auxiliar;
-	for (int i = 0; i >= contador; i++) {
-		auxiliar = head;
-		head = head->proximoFila;
-		delete auxiliar;
-	}
+template <typename T>
+void Fila<T>::clear() {
+    while (head != nullptr) {
+        NodeFila* auxiliar = head;
+        head = head->proximoFila;
+        delete auxiliar;
+    }
+    contador = 0;
+}
+
+template <typename T>
+bool Fila<T>::empty() {
+    return contador == 0;
+}
+
+template <typename T>
+int Fila<T>::size() {
+    return contador;
+}
+
+template <typename T>
+bool Fila<T>::full() {
+    return false; / 
 }
