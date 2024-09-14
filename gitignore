@@ -1,0 +1,44 @@
+# Arquivos gerados pelo Visual Studio
+*.exe
+*.obj
+*.o
+*.lib
+*.dll
+*.pdb
+*.ilk
+*.idb
+*.pch
+*.suo
+*.user
+*.ipch
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*.cache
+*.csproj.user
+*.vs/
+
+# Diretórios gerados
+Debug/
+Release/
+x64/
+x86/
+.vs/
+out/
+
+# Arquivos do CMake (se usado)
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# Build directories (CMake)
+/build/
+/cmake-build-debug/
+/cmake-build-release/
+
+# Diretórios temporários do Visual Studio Code
+.vscode/
