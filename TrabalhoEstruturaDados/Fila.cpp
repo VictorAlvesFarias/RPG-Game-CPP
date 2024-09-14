@@ -15,7 +15,7 @@ Fila::~Fila() {
 bool Fila::append(valor) {
 	NodeFila* nodeInsercao;
 	nodeInsercao = new NodeFila;
-
+	
 	if (nodeInsercao == NULL) {
 		cout << "Não foi possível alocar dinâmicamente outro nó" << endl;
 		abort();
@@ -40,10 +40,10 @@ int Fila::serve() {
 	int valorNode;
 	valorNode = head->valorGenerico;
 
-	NodeFila* auxiliar;
+	NodeFila *auxiliar;
 
 	auxiliar = head
-		head = head->proximoFila;
+	head = head->proximoFila;
 
 	delete auxiliar;
 	contador--;

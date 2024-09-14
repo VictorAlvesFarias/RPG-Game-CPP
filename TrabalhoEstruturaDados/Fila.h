@@ -19,7 +19,7 @@ private:
 		int valorGenerico;
 		NodeFila* proximoFila;
 	};
-
+	
 	int contador;
 	NodeFila* head;
 	NodeFila* tail;
