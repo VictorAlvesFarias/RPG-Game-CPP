@@ -2,16 +2,18 @@
 #include <iostream>
 using namespace std;
 
-Stack::Stack() {
+template <typename T>
+Stack<T>::Stack() {
 	topoPilha = NULL;
 	contador = 0;
 }
 
-Stack::~Stack() {
+template <typename T>
+Stack<T>::~Stack() {
 
 }
-
-void Stack::push(int valorGenerico) {
+template <typename T>
+void Stack<T>::push(T valorGenerico) {
 	StackNode* auxiliar;
 	auxiliar = new StackNode;
 	if (auxiliar == NULL) {

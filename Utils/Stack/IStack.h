@@ -1,10 +1,10 @@
 #pragma once
-
+template <typename T>
 class Stack {
 public:
 	Stack();
 	~Stack();
-	void push(int valorGenerico);
+	void push(T valorGenerico);
 	int pop();
 	bool empty();
 	int size();
@@ -15,7 +15,7 @@ public:
 private:
 	struct StackNode
 	{
-		int valorGenerico;
+		T valorGenerico;
 		StackNode* proximoPilha;
 	};
 
