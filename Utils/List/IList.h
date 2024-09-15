@@ -7,7 +7,7 @@ public:
 	List();
 	~List();
 	bool empty();
-	void insert(T valorGenerico, int index);
+	void insert(int index, T valorGenerico);
 	int Delete(int index);
 	int size();
 	void clear();

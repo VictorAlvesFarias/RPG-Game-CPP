@@ -1,4 +1,5 @@
 #include "IList.h"
+
 #include <iostream>
 using namespace std;
 
@@ -21,7 +22,7 @@ bool List<T>::empty() {
 	return contador == 0;
 }
 template <typename T>
-void List<T>::insert(T valor, int index) {
+void List<T>::insert(int index, T valor) {
 	if (index < 1 || index > contador + 1) {
 		cout << "num pode" << endl;
 		abort();
@@ -33,7 +34,7 @@ void List<T>::insert(T valor, int index) {
 		cout << "num deu";
 		abort();
 	}
-	newNode->entry = valor;
+	newNode->entry = index;
 	if (index == 1) {
 		newNode->nextNode = head;
 		head = newNode;
