@@ -2,13 +2,13 @@
 #include <iostream>
 using namespace std;
 
-
-List::List() {
+template <typename T>
+List<T>::List() {
 	head = NULL;
 	contador = 0;
 }
-
-List::~List() {
+template <typename T>
+List<T>::~List() {
 	ListNode* ponteiroAux;
 	while (head != NULL) {
 		ponteiroAux = head;
@@ -16,12 +16,12 @@ List::~List() {
 		delete ponteiroAux;
 	}
 }
-
-bool List::empty() {
+template <typename T>
+bool List<T>::empty() {
 	return contador == 0;
 }
-
-void List::insert(int valor, int index) {
+template <typename T>
+void List<T>::insert(T valor, int index) {
 	if (index < 1 || index > contador + 1) {
 		cout << "num pode" << endl;
 		abort();
@@ -47,18 +47,18 @@ void List::insert(int valor, int index) {
 	contador++;
 
 }
+template <typename T>
 
-
-int List::size() {
+int List<T>::size() {
 	return contador;
 }
-
-int List::Delete(int index) {
+template <typename T>
+int List<T>::Delete(int index) {
 	if (index < 1 || index > contador) {
 		cout << "num tem nada";
 		abort();
 	}
-	int valorGenerico;
+	T valorGenerico;
 	ListNode* aux;
 	if (index == 1) {
 		aux = head;
@@ -77,14 +77,15 @@ int List::Delete(int index) {
 	}
 }
 
-void List::setPosition(int index, ListNode*& atual) {
+template <typename T>
+void List<T>::setPosition(int index, ListNode*& atual) {
 	atual = head; //se for null vai cair nas verificações feitas no insert e delete
 	for (int i = 2; i <= index; i++) {
 		atual = atual->nextNode;
 	}
 }
-
-void List::clear() {
+template <typename T>
+void List<T>::clear() {
 	ListNode* auxiliar;
 	while (head != NULL) {
 		auxiliar = head;
@@ -93,25 +94,25 @@ void List::clear() {
 	}
 	contador = 0;
 }
-
-void List::replace(int index, int valor) {
-	if (index < 1 || index > contador) {
+template <typename T>
+void List<T>::replace(T valor, int index) {
+	if (valor < 1 || valor > contador) {
 		cout << "num pode" << endl;
 		abort();
 	}
 
 	ListNode* node;
 	setPosition(index, node);
-	node->entry = valor;
+	node->entry = index;
 
 }
-
-int List::retrieve(int index) {
+template <typename T>
+int List<T>::retrieve(int index) {
 	if (index < 1 || index > contador) {
 		cout << "num pode" << endl;
 		abort();
 	}
-	int valorGenerico;
+	T valorGenerico;
 	ListNode* node;
 	setPosition(index, node);
 	return valorGenerico = node->entry;

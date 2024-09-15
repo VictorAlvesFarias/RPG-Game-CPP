@@ -146,6 +146,7 @@
     <ClCompile Include="..\..\Utils\Queue\Queue.cpp" />
     <ClCompile Include="..\..\Utils\Randomize\Randomize.cpp" />
     <ClCompile Include="..\..\Utils\Stack\Stack.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

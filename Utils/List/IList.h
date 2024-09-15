@@ -1,16 +1,18 @@
 #pragma once
 
+template <typename T>
+
 class List {
 public:
 	List();
 	~List();
 	bool empty();
-	void insert(int valorGenerico, int index);
+	void insert(T valorGenerico, int index);
 	int Delete(int index);
 	int size();
 	void clear();
 	int retrieve(int index);
-	void replace(int valorGenerico, int index);
+	void replace(T valorGenerico, int index);
 
 private:
 	struct ListNode {

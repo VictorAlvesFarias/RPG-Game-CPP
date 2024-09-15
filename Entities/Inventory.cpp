@@ -3,7 +3,7 @@
 using namespace std;
 
 
-class Inventory() {
+class Inventory {
 	int Capacity;
-	Item[] Items;
-}
+	Item* Items;
+};

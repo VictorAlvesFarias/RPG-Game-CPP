@@ -89,5 +89,8 @@
     <ClCompile Include="..\..\Screens\StartingScreen.cpp">
       <Filter>Arquivos de Origem\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Arquivos de Origem\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
