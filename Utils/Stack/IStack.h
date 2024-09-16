@@ -1,6 +1,11 @@
 #pragma once
 template <typename T>
 class Stack {
+    private: struct StackNode {
+        T GenericValue;
+        StackNode* NextNode;
+    };
+
     private: int Counter;
     private: StackNode* TopNode;
 
@@ -13,9 +18,4 @@ class Stack {
     public: int Size();
     public: void Clear();
     public: int Top();
-
-    private: struct StackNode {
-        T GenericValue;
-        StackNode* NextNode;
-    };
 };

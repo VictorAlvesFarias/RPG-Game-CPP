@@ -1,10 +1,13 @@
 #include <iostream>
 #include <locale>
+#include <vector>
 #include "utils/List/List.cpp"
 using namespace std;
 
-int main() {
-    setlocale(LC_ALL, "");  
+int main()
+{
+    setlocale(LC_ALL, "");
+
     bool end = false;
     int currentMenu = 0;
     List<int> teste;

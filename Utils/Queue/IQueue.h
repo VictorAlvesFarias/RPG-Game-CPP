@@ -2,6 +2,11 @@
 
 template <typename T>
 class Queue {
+    private: struct QueueNode {
+        T GenericValue;
+        QueueNode* NextNode;
+    };
+
     private: int Counter;
     private: QueueNode* Head;
     private: QueueNode* Tail;
@@ -17,9 +22,4 @@ class Queue {
     public: void Clear();
     public: T Front();
     public: T Rear();
-
-    private: struct QueueNode {
-        T GenericValue;
-        QueueNode* NextNode;
-    };
 };
