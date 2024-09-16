@@ -4,93 +4,110 @@
 using namespace std;
 
 template <typename T>
-Fila<T>::Fila() {
-    contador = 0;
-    head = nullptr;
-    tail = nullptr;
+Queue<T>::Queue()
+{
+    Counter = 0;
+    Head = nullptr;
+    Tail = nullptr;
 }
 
 template <typename T>
-Fila<T>::~Fila() {
-    clear();
+Queue<T>::~Queue()
+{
+    Clear();
 }
 
 template <typename T>
-bool Fila<T>::append(T valorGenerico) {
-    NodeFila* nodeInsercao = new NodeFila;
+bool Queue<T>::Append(T genericValue)
+{
+    QueueNode *newNode = new QueueNode;
 
-    if (nodeInsercao == nullptr) {
-        cout << "Não foi possível alocar dinâmicamente outro nó" << endl;
+    if (newNode == nullptr)
+    {
+        cout << "Unable to allocate memory for a new node." << endl;
         abort();
     }
 
-    nodeInsercao->valorGenerico = valorGenerico;
-    nodeInsercao->proximoFila = nullptr;
+    newNode->GenericValue = genericValue;
+    newNode->NextNode = nullptr;
 
-    if (head == nullptr) {
-        head = nodeInsercao;
-        tail = nodeInsercao;
+    if (Head == nullptr)
+    {
+        Head = newNode;
+        Tail = newNode;
     }
-    else {
-        tail->proximoFila = nodeInsercao;
-        tail = nodeInsercao;
+    else
+    {
+        Tail->NextNode = newNode;
+        Tail = newNode;
     }
-    contador++;
+    Counter++;
     return true;
 }
 
 template <typename T>
-T Fila<T>::serve() {
-    if (head == nullptr) {
-        throw std::out_of_range("A fila está vazia.");
+T Queue<T>::Serve()
+{
+    if (Head == nullptr)
+    {
+        throw std::out_of_range("The queue is empty.");
     }
 
-    T valorNode = head->valorGenerico;
-    NodeFila* auxiliar = head;
-    head = head->proximoFila;
+    T nodeValue = Head->GenericValue;
+    QueueNode *temp = Head;
+    Head = Head->NextNode;
 
-    delete auxiliar;
-    contador--;
-    return valorNode;
+    delete temp;
+    Counter--;
+    return nodeValue;
 }
 
 template <typename T>
-T Fila<T>::front() {
-    if (head == nullptr) {
-        throw std::out_of_range("A fila está vazia.");
+T Queue<T>::Front()
+{
+    if (Head == nullptr)
+    {
+        throw std::out_of_range("The queue is empty.");
     }
-    return head->valorGenerico;
+    return Head->GenericValue;
 }
 
 template <typename T>
-T Fila<T>::rear() {
-    if (tail == nullptr) {
-        throw std::out_of_range("A fila está vazia.");
+T Queue<T>::Rear()
+{
+    if (Tail == nullptr)
+    {
+        throw std::out_of_range("The queue is empty.");
     }
-    return tail->valorGenerico;
+    return Tail->GenericValue;
 }
 
 template <typename T>
-void Fila<T>::clear() {
-    while (head != nullptr) {
-        NodeFila* auxiliar = head;
-        head = head->proximoFila;
-        delete auxiliar;
+void Queue<T>::Clear()
+{
+    while (Head != nullptr)
+    {
+        QueueNode *temp = Head;
+        Head = Head->NextNode;
+        delete temp;
     }
-    contador = 0;
+    Counter = 0;
 }
 
 template <typename T>
-bool Fila<T>::empty() {
-    return contador == 0;
+bool Queue<T>::IsEmpty()
+{
+    return Counter == 0;
 }
 
 template <typename T>
-int Fila<T>::size() {
-    return contador;
+int Queue<T>::Size()
+{
+    return Counter;
 }
 
 template <typename T>
-bool Fila<T>::full() {
-    return false;  
+bool Queue<T>::IsFull()
+{
+    return false; // No fixed size, so it's never full
 }

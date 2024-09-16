@@ -3,25 +3,31 @@
 using namespace std;
 
 template <typename T>
-Stack<T>::Stack() {
-	topoPilha = NULL;
-	contador = 0;
+Stack<T>::Stack()
+{
+	TopNode = nullptr;
+	Counter = 0;
 }
 
 template <typename T>
-Stack<T>::~Stack() {
-
+Stack<T>::~Stack()
+{
+	Clear(); // Adicionado para liberar a mem√≥ria corretamente, caso necess√°rio
 }
+
 template <typename T>
-void Stack<T>::push(T valorGenerico) {
-	StackNode* auxiliar;
-	auxiliar = new StackNode;
-	if (auxiliar == NULL) {
-		cout << "N„o foi possÌvel alocar um novo nÛ";
+void Stack<T>::Push(T genericValue)
+{
+	StackNode *tempNode = new StackNode;
+
+	if (tempNode == nullptr)
+	{
+		cout << "Unable to allocate memory for a new node." << endl;
 		abort();
 	}
 
-	auxiliar->proximoPilha = topoPilha;
-	auxiliar->valorGenerico = valorGenerico;
-	topoPilha = auxiliar;
+	tempNode->NextNode = TopNode;
+	tempNode->GenericValue = genericValue;
+	TopNode = tempNode;
+	Counter++;
 }

@@ -1,120 +1,134 @@
 #include "IList.h"
-
 #include <iostream>
+#include <functional> // NecessÃ¡rio para std::function
 using namespace std;
 
 template <typename T>
 List<T>::List() {
-	head = NULL;
-	contador = 0;
+    Head = nullptr;
+    Count = 0;
 }
+
 template <typename T>
 List<T>::~List() {
-	ListNode* ponteiroAux;
-	while (head != NULL) {
-		ponteiroAux = head;
-		head = head->nextNode;
-		delete ponteiroAux;
-	}
-}
-template <typename T>
-bool List<T>::empty() {
-	return contador == 0;
-}
-template <typename T>
-void List<T>::insert(int index, T valor) {
-	if (index < 1 || index > contador + 1) {
-		cout << "num pode" << endl;
-		abort();
-	}
-
-	ListNode* newNode;
-	newNode = new ListNode;
-	if (newNode == NULL) {
-		cout << "num deu";
-		abort();
-	}
-	newNode->entry = index;
-	if (index == 1) {
-		newNode->nextNode = head;
-		head = newNode;
-	}
-	else {
-		ListNode* aux;
-		setPosition(index - 1, aux);
-		newNode->nextNode = aux->nextNode;
-		head->nextNode = newNode;
-	}
-	contador++;
-
-}
-template <typename T>
-
-int List<T>::size() {
-	return contador;
-}
-template <typename T>
-int List<T>::Delete(int index) {
-	if (index < 1 || index > contador) {
-		cout << "num tem nada";
-		abort();
-	}
-	T valorGenerico;
-	ListNode* aux;
-	if (index == 1) {
-		aux = head;
-		valorGenerico = aux->entry;
-		head = head->nextNode;
-		delete aux;
-		return valorGenerico;
-	}
-	else {
-		ListNode* auxDelete;
-		setPosition(index - 1, auxDelete);
-		aux = auxDelete->nextNode;
-		valorGenerico = aux->entry;
-		delete auxDelete;
-		return valorGenerico;
-	}
+    ListNode* tempPointer;
+    while (Head != nullptr) {
+        tempPointer = Head;
+        Head = Head->NextNode;
+        delete tempPointer;
+    }
 }
 
 template <typename T>
-void List<T>::setPosition(int index, ListNode*& atual) {
-	atual = head; //se for null vai cair nas verificações feitas no insert e delete
-	for (int i = 2; i <= index; i++) {
-		atual = atual->nextNode;
-	}
+bool List<T>::IsEmpty() {
+    return Count == 0;
 }
-template <typename T>
-void List<T>::clear() {
-	ListNode* auxiliar;
-	while (head != NULL) {
-		auxiliar = head;
-		head = head->nextNode;
-		delete auxiliar;
-	}
-	contador = 0;
-}
-template <typename T>
-void List<T>::replace(T valor, int index) {
-	if (valor < 1 || valor > contador) {
-		cout << "num pode" << endl;
-		abort();
-	}
 
-	ListNode* node;
-	setPosition(index, node);
-	node->entry = index;
-
-}
 template <typename T>
-int List<T>::retrieve(int index) {
-	if (index < 1 || index > contador) {
-		cout << "num pode" << endl;
-		abort();
-	}
-	T valorGenerico;
-	ListNode* node;
-	setPosition(index, node);
-	return valorGenerico = node->entry;
+void List<T>::Insert(int index, T genericValue) {
+    if (index < 1 || index > Count + 1) {
+        cout << "Invalid index." << endl;
+        abort();
+    }
+
+    ListNode* newNode = new ListNode;
+    if (newNode == nullptr) {
+        cout << "Unable to allocate memory for new node." << endl;
+        abort();
+    }
+
+    newNode->Entry = genericValue;
+    if (index == 1) {
+        newNode->NextNode = Head;
+        Head = newNode;
+    }
+    else {
+        ListNode* aux;
+        SetPosition(index - 1, aux);
+        newNode->NextNode = aux->NextNode;
+        aux->NextNode = newNode;
+    }
+    Count++;
+}
+
+template <typename T>
+int List<T>::Size() {
+    return Count;
+}
+
+template <typename T>
+T List<T>::Delete(int index) {
+    if (index < 1 || index > Count) {
+        cout << "Invalid index." << endl;
+        abort();
+    }
+
+    T genericValue;
+    ListNode* aux;
+    if (index == 1) {
+        aux = Head;
+        genericValue = aux->Entry;
+        Head = Head->NextNode;
+        delete aux;
+    }
+    else {
+        ListNode* auxDelete;
+        SetPosition(index - 1, auxDelete);
+        aux = auxDelete->NextNode;
+        genericValue = aux->Entry;
+        auxDelete->NextNode = aux->NextNode;
+        delete aux;
+    }
+    Count--;
+    return genericValue;
+}
+
+template <typename T>
+void List<T>::SetPosition(int index, ListNode*& current) {
+    current = Head;
+    for (int i = 1; i < index; i++) {
+        current = current->NextNode;
+    }
+}
+
+template <typename T>
+void List<T>::Clear() {
+    ListNode* temp;
+    while (Head != nullptr) {
+        temp = Head;
+        Head = Head->NextNode;
+        delete temp;
+    }
+    Count = 0;
+}
+
+template <typename T>
+void List<T>::Replace(T genericValue, int index) {
+    if (index < 1 || index > Count) {
+        cout << "Invalid index." << endl;
+        abort();
+    }
+
+    ListNode* node;
+    SetPosition(index, node);
+    node->Entry = genericValue;
+}
+
+template <typename T>
+T List<T>::Retrieve(int index) {
+    if (index < 1 || index > Count) {
+        cout << "Invalid index." << endl;
+        abort();
+    }
+
+    ListNode* node;
+    SetPosition(index, node);
+    return node->Entry;
+}
+
+template <typename T>
+void List<T>::ForEach(function<void(T)> callback) {
+    for (int i = 1; i <= Count; i++) {
+        callback(Retrieve(i));
+    }
 }

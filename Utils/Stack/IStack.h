@@ -1,24 +1,21 @@
 #pragma once
 template <typename T>
 class Stack {
-public:
-	Stack();
-	~Stack();
-	void push(T valorGenerico);
-	int pop();
-	bool empty();
-	int size();
-	void clear();
-	int top();
+    private: int Counter;
+    private: StackNode* TopNode;
 
+    public: Stack();
+    public: ~Stack();
+    
+    public: void Push(T genericValue);
+    public: int Pop();
+    public: bool IsEmpty();
+    public: int Size();
+    public: void Clear();
+    public: int Top();
 
-private:
-	struct StackNode
-	{
-		T valorGenerico;
-		StackNode* proximoPilha;
-	};
-
-	int contador;
-	StackNode* topoPilha;
+    private: struct StackNode {
+        T GenericValue;
+        StackNode* NextNode;
+    };
 };

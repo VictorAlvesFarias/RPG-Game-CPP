@@ -1,9 +1,9 @@
 #include <iostream>
 #include "Item.cpp" 
+#include "Utils/List/List.cpp"
 using namespace std;
 
-
 class Inventory {
-	int Capacity;
-	Item* Items;
+    public: List<Item> Backpack;
+    public: List<Item> Belt;
 };

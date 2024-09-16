@@ -1,26 +1,25 @@
 #pragma once
 
 template <typename T>
-
 class List {
-public:
-	List();
-	~List();
-	bool empty();
-	void insert(int index, T valorGenerico);
-	int Delete(int index);
-	int size();
-	void clear();
-	int retrieve(int index);
-	void replace(T valorGenerico, int index);
+    private :int Count;
+    private :ListNode* Head;
 
-private:
-	struct ListNode {
-		int entry;
-		ListNode* nextNode;
-	};
-	int contador;
-	ListNode* head;
-	void setPosition(int index, ListNode*& atual);
+    public: List();
+    public: ~List();
+    public: bool IsEmpty();
+    public: void Insert(int index, T genericValue);
+    public: int Delete(int index);
+    public: int Size();
+    public: void Clear();
+    public: T Retrieve(int index);
+    public: void ForEach(std::function<void(T)> callback);
+    public: void Replace(T genericValue, int index);
 
+    private :struct ListNode {
+        T Entry;
+        ListNode* NextNode;
+    };
+
+    private :void SetPosition(int index, ListNode*& current);
 };

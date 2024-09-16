@@ -1,27 +1,25 @@
 #pragma once
 
 template <typename T>
-class Fila {
-public:
-    Fila();
-    ~Fila();
-    bool append(T valorGenerico); // Retorna se deu certo
-    T serve();
-    bool empty();
-    bool full();
-    int size();
-    void clear();
-    T front();
-    T rear();
+class Queue {
+    private: int Counter;
+    private: QueueNode* Head;
+    private: QueueNode* Tail;
 
-private:
-    struct NodeFila {
-        T valorGenerico;
-        NodeFila* proximoFila;
+    public: Queue();
+    public: ~Queue();
+
+    public: bool Append(T genericValue); // Returns true if successful
+    public: T Serve();
+    public: bool IsEmpty();
+    public: bool IsFull();
+    public: int Size();
+    public: void Clear();
+    public: T Front();
+    public: T Rear();
+
+    private: struct QueueNode {
+        T GenericValue;
+        QueueNode* NextNode;
     };
-
-    int contador;
-    NodeFila* head;
-    NodeFila* tail;
 };
-

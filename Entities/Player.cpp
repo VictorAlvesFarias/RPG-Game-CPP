@@ -7,5 +7,5 @@ class Player {
 	int Health;
 	int Level;
 	int Damage;
-	Inventory Inventoryo;
+	Inventory Inventory;
 };
