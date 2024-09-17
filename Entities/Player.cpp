@@ -7,10 +7,12 @@ class Player : public BaseEntity {
 	public: Player(string imageTextPath){
 		ImageTextPath = imageTextPath;
 	}
-	
-	public: string Name;
-	public: int Health;
-	public: int Level;
-	public: int Damage;
+	public: Player(){
+	}
+
+	public: string Name = "";
+	public: int Health = 0;
+	public: int Level = 0;
+	public: int Damage = 0;
 	public: Inventory Inventory;
 };

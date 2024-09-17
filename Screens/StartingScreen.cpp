@@ -4,7 +4,7 @@ using namespace std;
 
 class StartingScreen : public BaseScreen
 {
-    public:void Render()
+    public:void RenderImageText()
     {
         cout << "\n"; 
         cout << "\n"; 

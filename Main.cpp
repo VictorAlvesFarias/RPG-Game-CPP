@@ -21,7 +21,7 @@ int main()
         {
         case 1: //Starting
         {
-            startingScreen.Render();
+            startingScreen.RenderImageText();
             startingScreen.Pause();
             startingScreen.Clear();
             currentMenu = 2;
