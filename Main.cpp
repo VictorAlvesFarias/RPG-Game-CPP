@@ -2,6 +2,8 @@
 #include <locale>
 #include <vector>
 #include "utils/List/List.cpp"
+#include "Screens/StartingScreen.cpp"
+#include "Entities/Enemy.cpp"
 using namespace std;
 
 int main()
@@ -9,43 +11,54 @@ int main()
     setlocale(LC_ALL, "");
 
     bool end = false;
-    int currentMenu = 0;
-    List<int> teste;
+    int currentMenu = 1;
+    StartingScreen startingScreen;
+    Enemy enemy("Assets/Text-Images/Enemies/enemy-type-1.txt");
 
-    while (!end) {
-        cout << "Escolha uma opção:" << endl;
-        cout << "1 - Starting game" << endl;
-        cout << "2 - Menu" << endl;
-        cout << "3 - Game" << endl;
-        cout << "4 - Player status" << endl;
-        cout << "5 - Inventory" << endl;
-        cout << "6 - Fechar aplicação" << endl;
-        cout << "Escolha: ";
-        cin >> currentMenu;
-
-        switch (currentMenu) {
-        case 1:
-            cout << "Starting game" << endl;
-            break;
-        case 2:
+    while (!end)
+    {
+        switch (currentMenu)
+        {
+        case 1: //Starting
+        {
+            startingScreen.Render();
+            startingScreen.Pause();
+            startingScreen.Clear();
+            currentMenu = 2;
+        }
+        break;
+        case 2: //Figthing
+        {
+            enemy.RenderImageText();
+            enemy.Pause();
             cout << "Menu" << endl;
-            break;
-        case 3:
+        }
+        break;
+        case 3: //Reward
+        {
             cout << "Game" << endl;
-            break;
-        case 4:
+        }
+        break;
+        case 4: //End Level
+        {
             cout << "Player status" << endl;
-            break;
-        case 5:
+        }
+        break;
+        case 5: //Cenary
+        {
             cout << "Inventory" << endl;
-            break;
-        case 6:
-            cout << "Fechando aplicação..." << endl;
-            end = true;
-            break;
+        }
+        break;
+        case 6: //Backpack and Gordel
+        {
+            cout << "Inventory" << endl;
+        }
+        break;
         default:
+        {
             cout << "Opção inválida. Tente novamente." << endl;
-            break;
+        }
+        break;
         }
     }
 

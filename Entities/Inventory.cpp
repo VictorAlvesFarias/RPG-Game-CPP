@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Item.cpp" 
-#include "Utils/List/List.cpp"
 using namespace std;
 
 class Inventory {

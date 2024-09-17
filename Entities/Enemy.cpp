@@ -3,8 +3,8 @@
 #include "BaseEntity.cpp" 
 using namespace std;
 
-class Player : public BaseEntity {
-	public: Player(string imageTextPath){
+class Enemy : public BaseEntity {
+	public: Enemy(string imageTextPath){
 		ImageTextPath = imageTextPath;
 	}
 	
