@@ -1,0 +1,5 @@
+class Sqm {
+	public: Sqm(){
+		
+	}
+};

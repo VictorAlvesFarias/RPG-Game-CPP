@@ -1,5 +1,4 @@
-#include <iostream>
-#include "BaseScreen.cpp" 
+#include "BaseScreen/IBaseScreen.h"
 using namespace std;
 
 class StartingScreen : public BaseScreen
