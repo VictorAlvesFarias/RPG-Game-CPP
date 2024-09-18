@@ -1,2 +1,3 @@
-g++ main.cpp -o application;
+g++ main.cpp -o application
 .\application.exe
+pause

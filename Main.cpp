@@ -4,24 +4,35 @@
 #include "utils/List/List.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
+#include "Entities/BaseEntity/BaseEntity.cpp"
 #include "Screens/StartingScreen.cpp"
 #include "Screens/PlayerStatusScreen.cpp"
-#include "Entities/BaseEntity/BaseEntity.cpp"
-#include "Entities/Enemy/Enemy.cpp"
+#include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
 #include "Entities/Sqm/Sqm.cpp"
 using namespace std;
 
+string itemTypes[2] = { "weapon", "consumable" };
+
+void InitPlayer(Player& player) {
+    player.Backpack.Push(Item("Sword"));
+    player.Backpack.Push(Item("Knife"));
+    player.Backpack.Push(Item("Spear"));
+    player.Belt.Push(Item("Regen Health Potion Large"));
+    player.Belt.Push(Item("Regen Health Potion Small"));
+    player.Belt.Push(Item("Regen Health Potion Middle"));
+}
+
 int main()
 {
-    setlocale(LC_ALL, "");
-
     bool end = false;
-    int currentMenu = 1;
+    int currentMenu = 6;
+
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
     Player player;
-    Enemy enemy("Assets/Text-Images/Enemies/enemy-type-1.txt");
+    
+    InitPlayer(player);
 
     while (!end)
     {
@@ -37,30 +48,31 @@ int main()
         break;
         case 2: //Figthing
         {
-            enemy.RenderImageText();
-            playerStatusScreen.RenderImageText(player);
-            enemy.Pause();
-            cout << "Menu" << endl;
         }
         break;
         case 3: //Reward
         {
-            cout << "Game" << endl;
         }
         break;
         case 4: //End Level
         {
-            cout << "Player status" << endl;
         }
         break;
         case 5: //Cenary
         {
-            cout << "Inventory" << endl;
         }
         break;
-        case 6: //Backpack and Gordel
+        case 6: //Inventory
         {
-            cout << "Inventory" << endl;
+            cout << "Backpack:\n";
+            player.Backpack.ForEach([](Item item) {
+                cout << "  -" + item.Name + "\n";
+            });
+            cout << "Belt:\n";
+            player.Belt.ForEach([](Item item) {
+                cout << "  -" + item.Name + "\n";
+            });
+            player.Pause();
         }
         break;
         default:
@@ -68,6 +80,9 @@ int main()
             cout << "Opção inválida. Tente novamente." << endl;
         }
         break;
+        }
+        if(currentMenu > 1) {
+            playerStatusScreen.RenderImageText(player);
         }
     }
 

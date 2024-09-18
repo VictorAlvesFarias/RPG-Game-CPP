@@ -1,6 +1,6 @@
-
+#include "BaseScreen/IBaseScreen.h"
 using namespace std;
 
-class ItemScreen{
-
+class ItemScreen : public BaseScreen {
+    
 };

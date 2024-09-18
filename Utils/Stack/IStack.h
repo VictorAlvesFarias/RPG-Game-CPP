@@ -13,7 +13,8 @@ class Stack {
     public: ~Stack();
     
     public: void Push(T genericValue);
-    public: int Pop();
+    public: T Pop();
+    public: T Get();
     public: bool IsEmpty();
     public: int Size();
     public: void Clear();

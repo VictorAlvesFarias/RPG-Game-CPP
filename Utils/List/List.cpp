@@ -169,6 +169,15 @@ T List<T>::Get(int index)
 }
 
 template <typename T>
+void List<T>::ForEach(function<void (T,int)> callback)
+{
+    for (int i = 0; i < Count; i++)
+    {
+        callback(Get(i),i);
+    }
+}
+
+template <typename T>
 void List<T>::ForEach(function<void (T)> callback)
 {
     for (int i = 0; i < Count; i++)
