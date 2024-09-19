@@ -14,14 +14,14 @@ bool Player::UseItem(Item item)
 {
     int removeItemIndex = -1;
 
-    Backpack.ForEach([&](Item backpackItem, int index){
-        if(item.Name == backpackItem.Name) {
+    Belt.ForEach([&](Item BeltItem, int index)
+                 {
+        if(item.Name == BeltItem.Name) {
             removeItemIndex = index;
-        } }
-    );
+        } });
     if (removeItemIndex > 0)
     {
-        Backpack.Delete(removeItemIndex);
+        Belt.Delete(removeItemIndex);
         return true;
     }
     else
@@ -30,20 +30,53 @@ bool Player::UseItem(Item item)
     }
 }
 
-bool Player::GetItemToBackpack()
-{
-    if (!Belt.IsEmpty())
-    {
-        Item item = Belt.Get(Belt.Size() - 1);
+int Player::GetMaxHealth() {
+    int response = 0;
 
-        if (Backpack.Size() < BeltSlots)
+    Belt.ForEach([&response](Item item){ 
+        if(item.Consumable == false){
+            response += item.MaxHealth;
+        }
+    });
+
+    return response; 
+}
+
+int Player::GetDamage() {
+    int response = 0;
+
+    Belt.ForEach([&response](Item item){ 
+        if(item.Consumable == false){
+            response += item.Damage;
+        }
+    });
+
+    return response; 
+}
+
+void Player:: HealLife(int quantity) {
+    if((Health + quantity) > MaxHealth ){
+        Health = MaxHealth;
+    }
+    else {
+        Health += quantity;
+    }
+}
+
+bool Player::GetItemToBelt()
+{
+    if (!Backpack.IsEmpty())
+    {
+        Item item = Backpack.Get(Backpack.Size() - 1);
+
+        if (Belt.Size() < BeltSlots)
         {
-            Backpack.Push(item);
-            Belt.Delete(Belt.Size() - 1);
+            Belt.Push(item);
+            Backpack.Delete(Backpack.Size() - 1);
 
             return true;
         }
-        return false; 
+        return false;
     }
     else
     {

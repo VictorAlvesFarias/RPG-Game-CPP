@@ -4,12 +4,12 @@ using namespace std;
 
 class Item {
 
-	public: Item(string name);
+	public: Item(string name, bool consumable);
 	public: Item();
 
 	public: string Name;
-	public: string Type;
 	public: bool Consumable;
-	public: int HealthRegen;	
-
+	public: int Healing = 100;	
+	public: int MaxHealth = 100;	
+	public: int Damage = 100;
 };

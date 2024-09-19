@@ -1,8 +1,9 @@
 #include "IItem.h"
 
-Item::Item(string name)
+Item::Item(string name, bool consumable)
 {
 	Name = name;
+	Consumable = consumable;
 }
 
 

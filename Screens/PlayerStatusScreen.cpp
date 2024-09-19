@@ -10,7 +10,8 @@ class PlayerStatusScreen : public BaseScreen
         String strExtension;
     
         cout << "-----------------------------PLAYER STATUS----------------------------------\n"; 
-        cout << "Life:" + strExtension.PadStart(player.Health,4,'0') + '\n'; 
-        cout << "Damage:" + strExtension.PadStart(player.Damage ,4,'0') + '\n'; 
+        cout << "- Life: " << strExtension.PadStart(player.Health, 4, '0') << '/' << strExtension.PadStart(player.GetMaxHealth(), 4, '0') << '\n';
+        cout << "- Damage: " + strExtension.PadStart(player.GetDamage() ,4,'0') + '\n'; 
+        cout << "- Slots no cinto: " << player.BeltSlots  << '\n'; 
     };
 };
