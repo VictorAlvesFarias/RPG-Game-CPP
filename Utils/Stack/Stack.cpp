@@ -29,6 +29,7 @@ void Stack<T>::Push(T genericValue)
 	tempNode->NextNode = TopNode;
 	tempNode->GenericValue = genericValue;
 	TopNode = tempNode;
+
 	Counter++;
 }
 
@@ -38,10 +39,10 @@ T Stack<T>::Pop() {
 	if (IsEmpty()) {
 		cout << "The stack has no elements" << endl;
 		abort();
-	}
-;
-	StackPointer p = top;
-	top = top->NextNode;
+	};
+	
+	StackNode* p = TopNode;
+	TopNode = TopNode->NextNode;
 
 	delete p;
 
@@ -52,14 +53,16 @@ template <typename T>
 void Stack<T>::Clear() {
 
 	while (!IsEmpty()) {
-		Pop(x);
+		Pop();
 	}
 
 }
+
 template <typename T>
 int Stack<T>::Size() {
 	return Counter;
 }
+
 template <typename T>
 bool Stack<T>::IsEmpty() {
 	return TopNode == NULL;
@@ -67,6 +70,6 @@ bool Stack<T>::IsEmpty() {
 
 template <typename T>
 T Stack<T>::Top() {
-	return TopNode->GenericValue
+	return TopNode->GenericValue;
 }
 
