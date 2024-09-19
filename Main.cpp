@@ -36,6 +36,9 @@ int main()
 
     while (!end)
     {
+        if(currentMenu > 1) {
+            playerStatusScreen.RenderImageText(player);
+        }
         switch (currentMenu)
         {
         case 1: //Starting
@@ -80,9 +83,6 @@ int main()
             cout << "Opção inválida. Tente novamente." << endl;
         }
         break;
-        }
-        if(currentMenu > 1) {
-            playerStatusScreen.RenderImageText(player);
         }
     }
 

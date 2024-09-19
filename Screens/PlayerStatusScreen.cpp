@@ -5,7 +5,7 @@ using namespace std;
 
 class PlayerStatusScreen : public BaseScreen
 {
-    public:void RenderImageText(Player player)
+    public:void RenderImageText(Player& player)
     {
         String strExtension;
     
