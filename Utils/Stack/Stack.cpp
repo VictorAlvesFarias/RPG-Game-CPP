@@ -12,7 +12,7 @@ Stack<T>::Stack()
 template <typename T>
 Stack<T>::~Stack()
 {
-	Clear(); // Adicionado para liberar a memória corretamente, caso necessário
+	Clear();
 }
 
 template <typename T>
@@ -29,5 +29,47 @@ void Stack<T>::Push(T genericValue)
 	tempNode->NextNode = TopNode;
 	tempNode->GenericValue = genericValue;
 	TopNode = tempNode;
+
 	Counter++;
 }
+
+template <typename T>
+T Stack<T>::Pop() {
+
+	if (IsEmpty()) {
+		cout << "The stack has no elements" << endl;
+		abort();
+	};
+	
+	StackNode* p = TopNode;
+	TopNode = TopNode->NextNode;
+
+	delete p;
+
+	return 	TopNode->GenericValue;
+}
+
+template <typename T>
+void Stack<T>::Clear() {
+
+	while (!IsEmpty()) {
+		Pop();
+	}
+
+}
+
+template <typename T>
+int Stack<T>::Size() {
+	return Counter;
+}
+
+template <typename T>
+bool Stack<T>::IsEmpty() {
+	return TopNode == NULL;
+}
+
+template <typename T>
+T Stack<T>::Top() {
+	return TopNode->GenericValue;
+}
+

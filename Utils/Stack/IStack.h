@@ -13,9 +13,9 @@ class Stack {
     public: ~Stack();
     
     public: void Push(T genericValue);
-    public: int Pop();
+    public: T Pop();
     public: bool IsEmpty();
     public: int Size();
     public: void Clear();
-    public: int Top();
+    public: T Top();
 };
