@@ -31,7 +31,7 @@ bool Player::UseItem(Item item)
 }
 
 int Player::GetMaxHealth() {
-    int response = 0;
+    int response = MaxHealth;
 
     Belt.ForEach([&response](Item item){ 
         if(item.Consumable == false){
@@ -43,7 +43,7 @@ int Player::GetMaxHealth() {
 }
 
 int Player::GetDamage() {
-    int response = 0;
+    int response = Damage;
 
     Belt.ForEach([&response](Item item){ 
         if(item.Consumable == false){

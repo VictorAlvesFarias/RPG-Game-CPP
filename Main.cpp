@@ -63,7 +63,7 @@ int main()
             }
             break;
 
-            case 2: //Figthing
+            case 2: //Fi    gthing
             {
                 Pause();
             }

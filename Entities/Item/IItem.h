@@ -11,5 +11,6 @@ class Item {
 	public: bool Consumable;
 	public: int Healing = 100;	
 	public: int MaxHealth = 100;	
+	public: int BeltSlots = 1;
 	public: int Damage = 100;
 };
