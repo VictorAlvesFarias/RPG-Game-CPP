@@ -2,6 +2,8 @@
 #include <locale>
 #include <vector>
 #include "utils/List/List.cpp"
+#include "Config/Config.cpp"
+#include "utils/Rand/Rand.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
@@ -10,16 +12,30 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp"
+#include "Entities/Sqm/Sqm.cpp" 
+
 using namespace std;
 
-void InitPlayer(Player& player) {
-    player.Backpack.Push(Item("Sword",false));
-    player.Backpack.Push(Item("Knife",false ));
-    player.Backpack.Push(Item("Spear",false));
-    player.Belt.Push(Item("Regen Health Potion Large",true));
-    player.Belt.Push(Item("Regen Health Potion Small",true));
-    player.Belt.Push(Item("Regen Health Potion Middle",true));
+List<Item> RewardItem(int level) {
+    List<Item> rewardItems;
+    int itemsQuantity = Rand::Randomize(1, 5);
+     
+    for (int i = 0; i < itemsQuantity; i++) {
+        int indexItem = Rand::Randomize(0, 49); 
+        Item item = Config::items[indexItem];
+
+        rewardItems.Push(Config::items[indexItem]);
+    }
+    
+    return rewardItems;
+}
+
+void InitPlayer(Player& player, int level) {
+    List<Item> items = RewardItem(level);
+
+    items.ForEach([&player](Item item, int index){
+        player.Backpack.Push(item);
+    });
 }
 
 template <typename T>
@@ -49,7 +65,7 @@ int main()
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
     
-    InitPlayer(player);
+    InitPlayer(player,level);
 
     while (!end)
     {

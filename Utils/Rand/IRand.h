@@ -4,6 +4,6 @@ using namespace std;
 class Rand {
     public: Rand();
 
-    public: bool RandomChance(int percentage);
-    public: int Randomize(int min, int max);
+    public: static bool RandomChance(int percentage);
+    public: static int Randomize(int min, int max);
 };
