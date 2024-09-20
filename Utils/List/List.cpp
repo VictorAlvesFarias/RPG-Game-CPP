@@ -35,14 +35,14 @@ bool List<T>::Insert(int index, T item)
 
     if (index < 1 || index > Count + 1)
     {
-        throw out_of_range("There is no element in the index");
+        cout << "Memory allocation failed" << endl;
     }
 
     ListNode *newNode = new ListNode;
 
     if (newNode == nullptr)
     {
-        throw bad_alloc("Unable to allocate a new node for the Queue");
+        cout << "Memory allocation failed" << endl;
     }
 
     newNode->Entry = item;

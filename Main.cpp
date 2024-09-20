@@ -4,6 +4,7 @@
 #include "utils/Essentials/Essentials.cpp"
 #include "Config/Config.cpp"
 #include "utils/Rand/Rand.cpp"
+#include "utils/Stack/Stack.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
