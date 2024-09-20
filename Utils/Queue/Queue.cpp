@@ -24,8 +24,7 @@ bool Queue<T>::Append(T genericValue)
 
     if (newNode == nullptr)
     {
-        cout << "Unable to allocate memory for a new node." << endl;
-        abort();
+        throw bad_alloc("Unable to allocate a new node for the Queue");
     }
 
     newNode->GenericValue = genericValue;
@@ -50,7 +49,7 @@ T Queue<T>::Serve()
 {
     if (Head == nullptr)
     {
-        throw std::out_of_range("The queue is empty.");
+        throw out_of_range("The queue is empty.");
     }
 
     T nodeValue = Head->GenericValue;
@@ -67,7 +66,7 @@ T Queue<T>::Front()
 {
     if (Head == nullptr)
     {
-        throw std::out_of_range("The queue is empty.");
+        throw out_of_range("The queue is empty.");
     }
     return Head->GenericValue;
 }
@@ -77,7 +76,7 @@ T Queue<T>::Rear()
 {
     if (Tail == nullptr)
     {
-        throw std::out_of_range("The queue is empty.");
+        throw out_of_range("The queue is empty.");
     }
     return Tail->GenericValue;
 }

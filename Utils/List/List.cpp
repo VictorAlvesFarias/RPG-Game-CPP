@@ -35,16 +35,14 @@ bool List<T>::Insert(int index, T item)
 
     if (index < 1 || index > Count + 1)
     {
-        cout << "Insert error: Invalid index." << endl;
-        abort();
+        throw out_of_range("There is no element in the index");
     }
 
     ListNode *newNode = new ListNode;
 
     if (newNode == nullptr)
     {
-        cout << "Unable to allocate memory for new node." << endl;
-        abort();
+        throw bad_alloc("Unable to allocate a new node for the Queue");
     }
 
     newNode->Entry = item;
@@ -87,8 +85,7 @@ bool List<T>::Delete(int index)
     index++;
     if (index < 1 || index > Count)
     {
-        cout << "Delete error: Invalid index." << endl;
-        abort();
+        throw out_of_range("There is no element in the index");
     }
 
     T item;
@@ -143,8 +140,7 @@ void List<T>::Replace(T item, int index)
     index++;
     if (index < 1 || index > Count)
     {
-        cout << "Replace error: Invalid index." << endl;
-        abort();
+        throw out_of_range("There is no element in the index");
     }
 
     ListNode *node;
@@ -158,8 +154,7 @@ T List<T>::Get(int index)
     index++;
     if (index  < 1 || index > Count)
     {
-        cout << "Get error: Invalid index." << endl;
-        abort();
+        throw out_of_range("There is no element in the index");
     }
 
     ListNode *node;
