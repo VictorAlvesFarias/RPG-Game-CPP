@@ -15,5 +15,4 @@ class Item {
 	public: int Damage = 100;
 	public: void GenerateBonus(Item item);
 	public: void SetLevel(int level, Item item);
-
 };

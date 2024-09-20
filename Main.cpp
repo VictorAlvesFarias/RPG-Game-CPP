@@ -2,7 +2,7 @@
 #include <locale>
 #include <vector>
 #include "utils/List/List.cpp"
-#include "Config.cpp"
+#include "Config/IConfig.h"
 #include "utils/Rand/Rand.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
@@ -18,22 +18,16 @@ using namespace std;
 
 List<Item> RewardItem() {
     Config config;
-    Rand rand;
-     
-    srand(static_cast<unsigned int>(time(0)));
-     
-    int itemsQuantity = rand.Randomize(1, 5);
-     
     List<Item> rewardItems;
+    int itemsQuantity = Rand::Randomize(1, 5);
      
     for (int i = 0; i < itemsQuantity; i++) {
-        int indexItem = rand.Randomize(0, 49); 
+        int indexItem = Rand::Randomize(0, 49); 
         rewardItems.Push(config.items[indexItem]);
     }
     
     return rewardItems;
 }
-
 
 void InitPlayer(Player& player) {
     List<Item> items = RewardItem();
@@ -58,9 +52,7 @@ void Pause(){
     cout<<'\n';
     system("PAUSE");
 }
-Item GenerateItem(){
-    
-}
+
 int main()
 {    
     bool end = false;
