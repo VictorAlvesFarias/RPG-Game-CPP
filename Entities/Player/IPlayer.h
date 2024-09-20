@@ -12,7 +12,7 @@ class Player : public BaseEntity {
         Player();
 
         string Name = "";
-        int Health = 1000;
+        int Health = 100;
         int MaxHealth = 1000;
         int Level = 1000;
         int Damage = 0;

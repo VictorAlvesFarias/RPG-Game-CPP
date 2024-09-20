@@ -14,12 +14,13 @@ bool Player::UseItem(Item item)
 {
     int removeItemIndex = -1;
 
-    Belt.ForEach([&](Item BeltItem, int index)
-                 {
+    Belt.ForEach([&](Item BeltItem, int index){
         if(item.Name == BeltItem.Name) {
             removeItemIndex = index;
-        } });
-    if (removeItemIndex > 0)
+            HealLife(item.Healing);
+        } 
+    });
+    if (removeItemIndex > -1)
     {
         Belt.Delete(removeItemIndex);
         return true;
@@ -47,10 +48,12 @@ int Player::GetDamage() {
 
     Belt.ForEach([&response](Item item){ 
         if(item.Consumable == false){
+            cout << "Item damage: " << item.Damage << endl;  // Debug: Verifica o valor do dano de cada item
             response += item.Damage;
         }
     });
 
+    cout << "Total damage: " << response << endl;  // Debug: Verifica o dano total após iterar
     return response; 
 }
 
