@@ -1,7 +1,7 @@
 #include <iostream>
 #include <locale>
-#include <vector>
 #include "utils/List/List.cpp"
+#include "utils/Essentials/Essentials.cpp"
 #include "Config/Config.cpp"
 #include "utils/Rand/Rand.cpp"
 #include "utils/String/String.cpp"
@@ -38,22 +38,6 @@ void InitPlayer(Player& player, int level) {
     });
 }
 
-template <typename T>
-void Command(string message, T &response) {
-    cout << message;
-    cin >> response;
-}
-
-void Clear(){
-    system("cls");
-}
-
-void Pause(){
-    cout<<'\n';
-    cout<<'\n';
-    system("PAUSE");
-}
-
 int main()
 {    
     int level = 0; //Use this variable to scale difficulty algorithms
@@ -73,34 +57,34 @@ int main()
         {
             case 1: //Starting
             {
-                Clear();
+                Essentials::Clear();
                 startingScreen.RenderImageText();
-                Pause();
+                Essentials::Pause();
                 currentMenu = 6;
             }
             break;
 
             case 2: //Fi    gthing
             {
-                Pause();
+                Essentials::Pause();
             }
             break;
 
             case 3: //Reward
             {
-                Pause();
+                Essentials::Pause();
             }
             break;
 
             case 4: //End Level
             {
-                Pause();
+                Essentials::Pause();
             }
             break;
 
             case 5: //Cenary
             {
-                Pause();
+                Essentials::Pause();
             }
             break;
             
@@ -112,7 +96,7 @@ int main()
 
                 while (inventoryIsOpen)
                 {
-                    Clear();
+                    Essentials::Clear();
 
                     player.RenderImageText();
                     playerStatusScreen.RenderImageText(player);
@@ -159,7 +143,7 @@ int main()
                             cout<<"    - " << i << " " << options[i] ;
                         }
                         
-                        Command<int>("\n- Opcao: ", inventoryMenu);
+                        Essentials::Command<int>("\n- Opcao: ", inventoryMenu);
                         continue;
                     }
                     
@@ -171,7 +155,7 @@ int main()
                             case 0:
                             {
                                 cout << "Item enviado para o cinto.\n";
-                                Pause();
+                                Essentials::Pause();
                                 player.GetItemToBelt();
                                 inventoryIsOpen = false;
                             }
@@ -180,7 +164,7 @@ int main()
                             case 1:
                             {
                                 if(selectedItem == -1) {
-                                    Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
                                     cout << '\n';
                                 }
                                 else {
@@ -197,7 +181,7 @@ int main()
                                     cout<<'\n';
                                     inventoryMenu =-1;
                                     selectedItem = -1;
-                                    Pause();
+                                    Essentials::Pause();
                                 }
 
                                 continue;
@@ -213,7 +197,7 @@ int main()
                                 
                                 Item item = player.Backpack.Pop();
                                 cout << "- Voce removeu da mochila o item " << item.Name;
-                                Pause();
+                                Essentials::Pause();
                                 inventoryIsOpen = false;
                                 continue;
                             }
@@ -222,14 +206,14 @@ int main()
                             case 3:
                             {
                                 if(selectedItem == -1) {
-                                    Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
                                     cout << '\n';
                                 }
                                 else {
                                     Item item = player.Belt.Get(selectedItem);
                                     player.Belt.Delete(selectedItem);
                                     cout << "- Voce removeu do cinto o item " << item.Name;
-                                    Pause();
+                                    Essentials::Pause();
                                     inventoryIsOpen = false;
                                     continue;
                                 }
@@ -239,13 +223,13 @@ int main()
                             case 4:
                             {
                                 if(selectedItem == -1) {
-                                    Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
                                     cout << '\n';
                                 }
                                 else {
                                     Item item = player.Belt.Get(selectedItem);
                                     itemStatusScreen.RenderImageText(item);
-                                    Pause();
+                                    Essentials::Pause();
                                     inventoryIsOpen = false;
                                 }
                             }
