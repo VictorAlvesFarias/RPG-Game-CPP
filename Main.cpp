@@ -40,6 +40,7 @@ void Pause(){
 
 int main()
 {    
+    int level = 0; //Use this variable to scale difficulty algorithms
     bool end = false;
     int currentMenu = 1;
 
@@ -112,13 +113,17 @@ int main()
                     cout << "\n- Inventario:\n";
                     cout << "\n   Backpack:\n";
 
-                    if(player.Backpack.Size() == 0) {
-                        cout << "    - Sem nenhum item\n";
-                    }
+                    // If the inventory use list structure and show the list items 
+                    // if(player.Backpack.Size() == 0) {
+                    //     cout << "    - Sem nenhum item\n";
+                    // }
 
-                    player.Backpack.ForEach([](Item item, int index) {
-                        cout << "    - " + to_string(index) + " " + item.Name + "\n";
-                    });
+                    cout << "    - Quantidade de itens na mochila:"<< player.Backpack.Size();
+                    
+                    // If the inventory use list structure and show the list items 
+                    // player.Backpack.ForEach([](Item item, int index) {
+                    //     cout << "    - " + to_string(index) + " " + item.Name + "\n";
+                    // });
 
                     cout << "\n   Belt:\n";
 
@@ -185,8 +190,12 @@ int main()
 
                             case 2:
                             {                     
-                                Item item = player.Backpack.Get(player.Backpack.Size() - 1);
-                                player.Backpack.Delete(player.Backpack.Size() - 1);
+                                
+                                // If the inventory use list structure and show the list items 
+                                // Item item = player.Backpack.Get(player.Backpack.Size() - 1);
+                                // player.Backpack.Delete(player.Backpack.Size() - 1);
+                                
+                                Item item = player.Backpack.Pop();
                                 cout << "- Voce removeu da mochila o item " << item.Name;
                                 Pause();
                                 inventoryIsOpen = false;

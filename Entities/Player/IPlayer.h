@@ -3,6 +3,7 @@
 #include <string>
 #include "../BaseEntity/IBaseEntity.h"
 #include "../Item/IItem.h"
+#include "../Stack/IStack.h"
 #include "../../Utils/List/IList.h"
 using namespace std;
 
@@ -18,7 +19,7 @@ class Player : public BaseEntity {
         int Damage = 0;
         int BeltSlots = 10;
         List<Item> Belt;
-        List<Item> Backpack;
+        Stack<Item> Backpack;
 
         bool UseItem(Item item);
         bool GetItemToBelt();

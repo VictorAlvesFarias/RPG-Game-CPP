@@ -69,16 +69,28 @@ void Player:: HealLife(int quantity) {
 bool Player::GetItemToBelt()
 {
     if (!Backpack.IsEmpty())
-    {
-        Item item = Backpack.Get(Backpack.Size() - 1);
+    {;
 
         if (Belt.Size() < BeltSlots)
         {
+            
+            Item item = Backpack.Pop();
             Belt.Push(item);
-            Backpack.Delete(Backpack.Size() - 1);
 
             return true;
         }
+
+        // If the inventory use list structure and show the list items 
+        // Item item = Backpack.Get(Backpack.Size() - 1);
+
+        // if (Belt.Size() < BeltSlots)
+        // {
+        //     Belt.Push(item);
+        //     Backpack.Delete(Backpack.Size() - 1);
+
+        //     return true;
+        // }
+
         return false;
     }
     else
