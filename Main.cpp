@@ -2,6 +2,8 @@
 #include <locale>
 #include <vector>
 #include "utils/List/List.cpp"
+#include "Config.cpp"
+#include "utils/Rand/Rand.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
@@ -10,16 +12,35 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp"
+#include "Entities/Sqm/Sqm.cpp" 
+
 using namespace std;
 
+List<Item> RewardItem() {
+    Config config;
+    Rand rand;
+     
+    srand(static_cast<unsigned int>(time(0)));
+     
+    int itemsQuantity = rand.Randomize(1, 5);
+     
+    List<Item> rewardItems;
+     
+    for (int i = 0; i < itemsQuantity; i++) {
+        int indexItem = rand.Randomize(0, 49); 
+        rewardItems.Push(config.items[indexItem]);
+    }
+    
+    return rewardItems;
+}
+
+
 void InitPlayer(Player& player) {
-    player.Backpack.Push(Item("Sword",false));
-    player.Backpack.Push(Item("Knife",false ));
-    player.Backpack.Push(Item("Spear",false));
-    player.Belt.Push(Item("Regen Health Potion Large",true));
-    player.Belt.Push(Item("Regen Health Potion Small",true));
-    player.Belt.Push(Item("Regen Health Potion Middle",true));
+    List<Item> items = RewardItem();
+
+    items.ForEach([&player](Item item, int index){
+        player.Backpack.Push(item);
+    });
 }
 
 template <typename T>
@@ -37,7 +58,9 @@ void Pause(){
     cout<<'\n';
     system("PAUSE");
 }
-
+Item GenerateItem(){
+    
+}
 int main()
 {    
     bool end = false;
