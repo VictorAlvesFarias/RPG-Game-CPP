@@ -22,7 +22,7 @@ void Stack<T>::Push(T genericValue)
 
 	if (tempNode == nullptr)
 	{
-		throw std::bad_alloc("Unable to allocate a new node for the Queue")
+		throw std::bad_alloc("Unable to allocate a new node for the Queue");
 	}
 
 	tempNode->NextNode = TopNode;
