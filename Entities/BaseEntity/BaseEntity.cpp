@@ -16,6 +16,3 @@ void BaseEntity::RenderImageText() {
     file.close();
 }
 
-void BaseEntity::Pause() {
-    cin.get();
-}

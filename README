@@ -1,0 +1,46 @@
+
+<h1>Project README</h1>
+
+<h2>Overview</h2>
+<p>
+    This project is a console-based RPG (Role-Playing Game) application developed in C++. 
+    It allows players to navigate through various screens, manage their inventory, 
+    and engage with game elements such as items and characters. 
+    The primary focus of the game is to create an immersive experience where players 
+    can interact with their environment, utilize items, and progress through different stages of gameplay.
+</p>
+
+<h2>Features</h2>
+<ul>
+    <li><strong>Player Management:</strong> The game allows players to create and manage a character, 
+        including initializing their inventory with various items like weapons and health potions.</li>
+    <li><strong>Inventory System:</strong> Players can manage their items through an inventory system, 
+        where they can send items to a belt, use consumable items, or discard unwanted items.</li>
+    <li><strong>Screen Navigation:</strong> The application features multiple screens, such as the 
+        starting screen and player status screen, enabling players to navigate through different stages of the game easily.</li>
+    <li><strong>Dynamic Item Usage:</strong> Players can use items from their inventory, enhancing their character's abilities or health as they progress.</li>
+</ul>
+
+<h2>Structure</h2>
+<p>The project is organized into several directories:</p>
+<ul>
+    <li><strong>Screens:</strong> Contains screen classes responsible for rendering different parts of the game.</li>
+    <li><strong>Entities:</strong> Contains classes that represent various game elements such as players and items.</li>
+    <li><strong>Utils:</strong> Contains utility functions and classes for list management and string operations.</li>
+</ul>
+<h3>Main Components</h3>
+<ul>
+    <li><strong>Player:</strong> Represents the player character, managing attributes and inventory.</li>
+    <li><strong>Item:</strong> Represents items that can be collected, used, or discarded.</li>
+    <li><strong>Backpack and Belt:</strong> Data structures used to manage the player's inventory and equipped items.</li>
+</ul>
+
+<h2>How to Run</h2>
+<p>To run the project, simply execute the <code>setup.bat</code> file, which will compile the code and start the application.</p>
+
+<h2>Contributing</h2>
+<p>Contributions are welcome! If you have ideas for features, improvements, or bug fixes, 
+please feel free to submit a pull request or open an issue.</p>
+
+<h2>License</h2>
+<p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for more details.</p>

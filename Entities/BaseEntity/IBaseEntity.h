@@ -10,5 +10,4 @@ class BaseEntity {
         string ImageTextPath;
 
         void RenderImageText();
-        void Pause();
 };

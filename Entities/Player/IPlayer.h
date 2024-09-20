@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "../Inventory/Inventory.cpp"
 #include "../BaseEntity/IBaseEntity.h"
-
+#include "../Item/IItem.h"
+#include "../../Utils/List/IList.h"
 using namespace std;
 
 class Player : public BaseEntity {
@@ -12,8 +12,19 @@ class Player : public BaseEntity {
         Player();
 
         string Name = "";
-        int Health = 0;
-        int Level = 0;
+        int Health = 100;
+        int MaxHealth = 1000;
+        int Level = 1000;
         int Damage = 0;
-        Inventory Inventory;
+        int BeltSlots = 10;
+        List<Item> Belt;
+        List<Item> Backpack;
+
+        bool UseItem(Item item);
+        bool GetItemToBelt();
+        bool DiscardItemToBelt(int index);
+        bool DiscardItemToBackpack();
+        int GetMaxHealth();
+        int GetDamage();
+        void HealLife(int quantity);
 };

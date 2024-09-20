@@ -10,8 +10,6 @@ class StartingScreen : public BaseScreen
         cout << "\n"; 
         cout << "\n"; 
         cout << "\n"; 
-        cout << "\n"; 
-        cout << "\n"; 
         cout << "   ___     __              __                 ____               __ \n";
         cout << "  / _ |___/ /  _____ ___  / /___ _________   / __ \\__ _____ ___ / /_\n";
         cout << " / __ / _  / |/ / -_) _ \\/ __/ // / __/ -_) / /_/ / // / -_|_-</ __/\n";

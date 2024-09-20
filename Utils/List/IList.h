@@ -21,6 +21,7 @@ class List {
     public: int Size();
     public: void Clear();
     public: T Get(int index);
+    public: void ForEach(function<void(T,int)> callback);
     public: void ForEach(function<void(T)> callback);
     public: void Replace(T genericValue, int index);
     private :void SetPosition(int index, ListNode*& current);

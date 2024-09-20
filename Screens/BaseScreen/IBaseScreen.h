@@ -5,7 +5,4 @@
 using namespace std;
 
 class BaseScreen {
-    public:
-        void Pause();
-        void Clear();
 };

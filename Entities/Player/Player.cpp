@@ -1,9 +1,88 @@
 #include "IPlayer.h"
+#include "../Item/IItem.h"
 
-Player::Player(string imageTextPath) {
+Player::Player(string imageTextPath)
+{
     ImageTextPath = imageTextPath;
 }
 
-Player::Player() {
-    // Construtor padrão
+Player::Player()
+{
+}
+
+bool Player::UseItem(Item item)
+{
+    int removeItemIndex = -1;
+
+    Belt.ForEach([&](Item BeltItem, int index){
+        if(item.Name == BeltItem.Name) {
+            removeItemIndex = index;
+            HealLife(item.Healing);
+        } 
+    });
+    if (removeItemIndex > -1)
+    {
+        Belt.Delete(removeItemIndex);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+int Player::GetMaxHealth() {
+    int response = MaxHealth;
+
+    Belt.ForEach([&response](Item item){ 
+        if(item.Consumable == false){
+            response += item.MaxHealth;
+        }
+    });
+
+    return response; 
+}
+
+int Player::GetDamage() {
+    int response = Damage;
+
+    Belt.ForEach([&response](Item item){ 
+        if(item.Consumable == false){
+            cout << "Item damage: " << item.Damage << endl;  // Debug: Verifica o valor do dano de cada item
+            response += item.Damage;
+        }
+    });
+
+    cout << "Total damage: " << response << endl;  // Debug: Verifica o dano total após iterar
+    return response; 
+}
+
+void Player:: HealLife(int quantity) {
+    if((Health + quantity) > MaxHealth ){
+        Health = MaxHealth;
+    }
+    else {
+        Health += quantity;
+    }
+}
+
+bool Player::GetItemToBelt()
+{
+    if (!Backpack.IsEmpty())
+    {
+        Item item = Backpack.Get(Backpack.Size() - 1);
+
+        if (Belt.Size() < BeltSlots)
+        {
+            Belt.Push(item);
+            Backpack.Delete(Backpack.Size() - 1);
+
+            return true;
+        }
+        return false;
+    }
+    else
+    {
+        return false;
+    }
 }

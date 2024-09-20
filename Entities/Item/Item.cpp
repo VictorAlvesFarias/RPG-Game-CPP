@@ -1,9 +1,12 @@
+#include "IItem.h"
 
-using namespace std;
+Item::Item(string name, bool consumable)
+{
+	Name = name;
+	Consumable = consumable;
+}
 
-class Item {
-	public: string Name;
-	public: int Value;
-	public: string Type;
-	public: bool Consumable;
-};
+
+Item::Item()
+{
+}
