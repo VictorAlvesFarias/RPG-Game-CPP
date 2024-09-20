@@ -22,8 +22,7 @@ void Stack<T>::Push(T genericValue)
 
 	if (tempNode == nullptr)
 	{
-		cout << "Unable to allocate memory for a new node." << endl;
-		abort();
+		throw std::bad_alloc("Unable to allocate a new node for the Queue")
 	}
 
 	tempNode->NextNode = TopNode;
@@ -37,8 +36,7 @@ template <typename T>
 T Stack<T>::Pop() {
 
 	if (IsEmpty()) {
-		cout << "The stack has no elements" << endl;
-		abort();
+        throw out_of_range("The stack is empty.");
 	};
 	
 	StackNode* p = TopNode;
