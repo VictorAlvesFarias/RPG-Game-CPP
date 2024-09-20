@@ -14,9 +14,8 @@ class Stack {
     
     public: void Push(T genericValue);
     public: T Pop();
-    public: T Get();
     public: bool IsEmpty();
     public: int Size();
     public: void Clear();
-    public: int Top();
+    public: T Top();
 };
