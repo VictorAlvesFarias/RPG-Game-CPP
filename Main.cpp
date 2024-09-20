@@ -2,7 +2,7 @@
 #include <locale>
 #include <vector>
 #include "utils/List/List.cpp"
-#include "Config/IConfig.h"
+#include "Config/Config.cpp"
 #include "utils/Rand/Rand.cpp"
 #include "utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
@@ -16,21 +16,22 @@
 
 using namespace std;
 
-List<Item> RewardItem() {
-    Config config;
+List<Item> RewardItem(int level) {
     List<Item> rewardItems;
     int itemsQuantity = Rand::Randomize(1, 5);
      
     for (int i = 0; i < itemsQuantity; i++) {
         int indexItem = Rand::Randomize(0, 49); 
-        rewardItems.Push(config.items[indexItem]);
+        Item item = Config::items[indexItem];
+
+        rewardItems.Push(Config::items[indexItem]);
     }
     
     return rewardItems;
 }
 
-void InitPlayer(Player& player) {
-    List<Item> items = RewardItem();
+void InitPlayer(Player& player, int level) {
+    List<Item> items = RewardItem(level);
 
     items.ForEach([&player](Item item, int index){
         player.Backpack.Push(item);
@@ -55,6 +56,7 @@ void Pause(){
 
 int main()
 {    
+    int level = 0; //Use this variable to scale difficulty algorithms
     bool end = false;
     int currentMenu = 1;
 
@@ -63,7 +65,7 @@ int main()
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
     
-    InitPlayer(player);
+    InitPlayer(player,level);
 
     while (!end)
     {
