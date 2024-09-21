@@ -13,14 +13,57 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp" 
-
+#include "Entities/Sqm/Sqm.cpp"  
 using namespace std;
 
+//#include "Services/Reward/Reward.cpp"  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+void ShowMenu(List<Item> items){
+    if(items.Size() == 0){
+        cout << "Ops, Você não encontrou nenhum item.\n";
+        return;
+    }
+    int choice;
+    while (true) {
+        cout << "\nItens ganhados:\n";
+        for (size_t i = 0; i < items.Size(); ++i) {
+            cout << i + 1 << ". " << items.Get(i).Name << " (Healing: " << items.Get(i).Healing 
+                 << ", Max Health: " << items.Get(i).MaxHealth << ", Damage: " << items.Get(i).Damage << ")\n";
+        }
+
+        cout << "\nEscolha uma opção:\n";
+        cout << "1. Colocar na mochila\n";
+        cout << "2. Colocar no cinto\n";
+        cout << "3. Continuar\n";
+        cout << "Escolha: ";
+        cin >> choice;
+
+        if (choice == 1 || choice == 2) {
+            int itemIndex;
+            cout << "Escolha o item (1-" << items.Size() << "): ";
+            cin >> itemIndex;
+
+            if (itemIndex < 1 || itemIndex > items.Size()) {
+                cout << "Item inválido. Tente novamente.\n";
+                continue;
+            }
+
+            // Aqui você pode adicionar lógica para colocar o item na mochila ou cinto.
+            cout << "Item '" << items.Get(itemIndex - 1).Name << "' adicionado à "
+                 << (choice == 1 ? "mochila" : "cinto") << ".\n";
+        } else if (choice == 3) {
+            cout << "Continuando...\n";
+            break;
+        } else {
+            cout << "Escolha inválida. Tente novamente.\n";
+        }
+    }
+}
 List<Item> RewardItem(int level) {
     List<Item> rewardItems;
     int itemsQuantity = Rand::Randomize(1, 5);
-     
+    
     for (int i = 0; i < itemsQuantity; i++) {
         int indexItem = Rand::Randomize(0, 49); 
         Item item = Config::items[indexItem];
@@ -32,25 +75,29 @@ List<Item> RewardItem(int level) {
 }
 
 void InitPlayer(Player& player, int level) {
-    List<Item> items = RewardItem(level);
+    // Reward reward;
 
-    items.ForEach([&player](Item item, int index){
-        player.Backpack.Push(item);
-    });
+    // List<Item> items = reward.RewardItem(level);
+
+    // items.ForEach([&player](Item item, int index){
+    //     player.Backpack.Push(item);
+    // });
 }
 
 int main()
 {    
-    int level = 0; //Use this variable to scale difficulty algorithms
+    int level = 0;  
     bool end = false;
-    int currentMenu = 1;
+    int currentMenu = 3;
 
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
-    
+   // ShowMenu(RewardItem(1)); //meti ai pra testar a sapecage maluca
+
     InitPlayer(player,level);
+    bool isReward = false;
 
     while (!end)
     {
@@ -73,7 +120,17 @@ int main()
 
             case 3: //Reward
             {
-                Essentials::Pause();
+                List<Item> items = RewardItem(5);
+    
+                isReward = true;
+                cout << "\nItens ganhados:\n";
+                for (size_t i = 0; i < items.Size(); ++i) {
+                    cout << i + 1 << ". " << items.Get(i).Name << " (Healing: " << items.Get(i).Healing 
+                        << ", Max Health: " << items.Get(i).MaxHealth << ", Damage: " << items.Get(i).Damage << ")\n";
+                }
+        
+                currentMenu = 6;
+ 
             }
             break;
 
@@ -97,10 +154,12 @@ int main()
 
                 while (inventoryIsOpen)
                 {
-                    Essentials::Clear();
+                    if(!isReward){
+                        Essentials::Clear(); //Melhorar?
+                        player.RenderImageText(); 
+                        playerStatusScreen.RenderImageText(player); 
+                    }
 
-                    player.RenderImageText();
-                    playerStatusScreen.RenderImageText(player);
 
                     string options[6] = {
                         "Enviar item para o cinto\n",
