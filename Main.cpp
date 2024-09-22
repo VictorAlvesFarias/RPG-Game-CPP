@@ -18,49 +18,6 @@ using namespace std;
 
 //#include "Services/Reward/Reward.cpp"  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-
-void ShowMenu(List<Item> items){
-    if(items.Size() == 0){
-        cout << "Ops, Você não encontrou nenhum item.\n";
-        return;
-    }
-    int choice;
-    while (true) {
-        cout << "\nItens ganhados:\n";
-        for (size_t i = 0; i < items.Size(); ++i) {
-            cout << i + 1 << ". " << items.Get(i).Name << " (Healing: " << items.Get(i).Healing 
-                 << ", Max Health: " << items.Get(i).MaxHealth << ", Damage: " << items.Get(i).Damage << ")\n";
-        }
-
-        cout << "\nEscolha uma opção:\n";
-        cout << "1. Colocar na mochila\n";
-        cout << "2. Colocar no cinto\n";
-        cout << "3. Continuar\n";
-        cout << "Escolha: ";
-        cin >> choice;
-
-        if (choice == 1 || choice == 2) {
-            int itemIndex;
-            cout << "Escolha o item (1-" << items.Size() << "): ";
-            cin >> itemIndex;
-
-            if (itemIndex < 1 || itemIndex > items.Size()) {
-                cout << "Item inválido. Tente novamente.\n";
-                continue;
-            }
-
-            // Aqui você pode adicionar lógica para colocar o item na mochila ou cinto.
-            cout << "Item '" << items.Get(itemIndex - 1).Name << "' adicionado à "
-                 << (choice == 1 ? "mochila" : "cinto") << ".\n";
-        } else if (choice == 3) {
-            cout << "Continuando...\n";
-            break;
-        } else {
-            cout << "Escolha inválida. Tente novamente.\n";
-        }
-    }
-}
-
 List<Item> RewardItem(int level) {
     List<Item> rewardItems;
  
