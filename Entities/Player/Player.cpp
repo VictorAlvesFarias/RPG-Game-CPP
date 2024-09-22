@@ -1,6 +1,7 @@
 #include "IPlayer.h"
 #include "../Item/IItem.h" 
-#include "../Stack/IStack.h"
+#include "../../Utils/Stack/IStack.h"
+
 Player::Player(string imageTextPath)
 {
     ImageTextPath = imageTextPath;

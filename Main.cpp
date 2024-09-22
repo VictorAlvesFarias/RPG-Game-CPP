@@ -13,7 +13,7 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp"  
+#include "Entities/Sqm/Sqm.cpp"   
 using namespace std;
 
 //#include "Services/Reward/Reward.cpp"  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -60,33 +60,36 @@ void ShowMenu(List<Item> items){
         }
     }
 }
+
 List<Item> RewardItem(int level) {
     List<Item> rewardItems;
-    int itemsQuantity = Rand::Randomize(1, 5);
+ 
+     int itemsQuantity = Rand::Randomize(0, 5);
     
     for (int i = 0; i < itemsQuantity; i++) {
         int indexItem = Rand::Randomize(0, 49); 
-        Item item = Config::items[indexItem];
-
-        rewardItems.Push(Config::items[indexItem]);
+        
+        Item item = Config::items[indexItem]; 
+        
+        rewardItems.Push(item);
     }
     
     return rewardItems;
 }
 
 void InitPlayer(Player& player, int level) {
-    // Reward reward;
+ 
 
-    // List<Item> items = reward.RewardItem(level);
+    List<Item> items = RewardItem(level);
 
-    // items.ForEach([&player](Item item, int index){
-    //     player.Backpack.Push(item);
-    // });
+    items.ForEach([&player](Item item, int index){
+        player.Backpack.Push(item);
+    });
 }
 
 int main()
 {    
-    int level = 0;  
+    int level = 1;  
     bool end = false;
     int currentMenu = 3;
 
@@ -96,8 +99,7 @@ int main()
     Player player("Assets/Text-Images/Player/player.txt");
    // ShowMenu(RewardItem(1)); //meti ai pra testar a sapecage maluca
 
-    InitPlayer(player,level);
-    bool isReward = false;
+    InitPlayer(player,level); 
 
     while (!end)
     {
@@ -108,7 +110,7 @@ int main()
                 Essentials::Clear();
                 startingScreen.RenderImageText();
                 Essentials::Pause();
-                currentMenu = 6;
+                currentMenu = 3;
             }
             break;
 
@@ -121,15 +123,62 @@ int main()
             case 3: //Reward
             {
                 List<Item> items = RewardItem(5);
-    
-                isReward = true;
-                cout << "\nItens ganhados:\n";
-                for (size_t i = 0; i < items.Size(); ++i) {
-                    cout << i + 1 << ". " << items.Get(i).Name << " (Healing: " << items.Get(i).Healing 
-                        << ", Max Health: " << items.Get(i).MaxHealth << ", Damage: " << items.Get(i).Damage << ")\n";
+
+                if(items.Size() == 0){
+                    cout << "Ops, Você não encontrou nenhum item.\n";
+ 
+                    break;
                 }
-        
-                currentMenu = 6;
+
+                cout << "\nItens ganhados:\n";
+ 
+                items.ForEach([](Item item, int index) {
+                        cout << "    - " + to_string(index) + " " + item.Name + "\n";
+                    });
+
+                int choice;
+                cout << "\nComandos:\n";
+                cout << "1. Colocar na mochila\n";
+                cout << "2. Colocar no cinto\n";
+                cout << "3. Continuar\n";
+                cout << "Escolha: ";
+
+                cin >> choice; 
+
+                if(choice == 1){
+                    int itemIndex;
+                    cout << "Escolha o item (1-" << items.Size() << "): ";
+                    cin >> itemIndex;
+
+                    if (itemIndex < 1 || itemIndex > items.Size()) {
+                        cout << "Item invalido. Tente novamente.\n";
+                        continue;
+                    }
+
+                    player.Backpack.Push(items.Get(itemIndex - 1));
+                    cout << "Item '" << items.Get(itemIndex - 1).Name << "' adicionado a mochila.\n";
+                }
+                else if(choice == 2){
+                    int itemIndex;
+                    cout << "Escolha o item (1-" << items.Size() << "): ";
+                    cin >> itemIndex;
+
+                    if (itemIndex < 1 || itemIndex > items.Size()) {
+                        cout << "Item invalido. Tente novamente.\n";
+                        continue;
+                    }
+
+                    player.Belt.Push(items.Get(itemIndex - 1));
+                    cout << "Item '" << items.Get(itemIndex - 1).Name << "' adicionado ao cinto.\n";
+                }
+                else if(choice == 3){
+                    cout << "Continuando...\n";
+                }
+                else {
+                    cout << "Escolha inválida. Tente novamente.\n";
+                }
+                break;
+
  
             }
             break;
@@ -154,12 +203,9 @@ int main()
 
                 while (inventoryIsOpen)
                 {
-                    if(!isReward){
-                        Essentials::Clear(); //Melhorar?
-                        player.RenderImageText(); 
-                        playerStatusScreen.RenderImageText(player); 
-                    }
-
+                    Essentials::Clear();  
+                    player.RenderImageText(); 
+                    playerStatusScreen.RenderImageText(player); 
 
                     string options[6] = {
                         "Enviar item para o cinto\n",
@@ -180,7 +226,7 @@ int main()
 
                     cout << "    - Quantidade de itens na mochila:"<< player.Backpack.Size();
                     
-                    // If the inventory use list structure and show the list items 
+                   // If the inventory use list structure and show the list items 
                     // player.Backpack.ForEach([](Item item, int index) {
                     //     cout << "    - " + to_string(index) + " " + item.Name + "\n";
                     // });

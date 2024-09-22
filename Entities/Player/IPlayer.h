@@ -3,7 +3,7 @@
 #include <string>
 #include "../BaseEntity/IBaseEntity.h"
 #include "../Item/IItem.h"
-#include "../Stack/IStack.h"
+#include "../../Utils/Stack/IStack.h"
 #include "../../Utils/List/IList.h"
 using namespace std;
 
