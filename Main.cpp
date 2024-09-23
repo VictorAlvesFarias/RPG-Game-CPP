@@ -13,7 +13,6 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp"
 
 using namespace std;
 
