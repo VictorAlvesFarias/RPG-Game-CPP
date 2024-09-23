@@ -22,7 +22,7 @@ jobs:
     - name: Compile C++ code
       run: |
         mkdir -p bin
-        g++ -o bin/application main.cpp  # Compila o arquivo main.cpp e coloca o binário em `bin/my_program`
+        g++ -o bin/application ../../Main.cpp
 
     - name: Upload the binary artifact
       uses: actions/upload-artifact@v3
