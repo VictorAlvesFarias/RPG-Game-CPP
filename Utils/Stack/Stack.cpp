@@ -43,6 +43,7 @@ T Stack<T>::Pop() {
 	TopNode = TopNode->NextNode;
 
 	delete p;
+	Counter--;
 
 	return 	TopNode->GenericValue;
 }

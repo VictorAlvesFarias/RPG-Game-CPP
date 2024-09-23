@@ -13,35 +13,37 @@
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
-#include "Entities/Sqm/Sqm.cpp" 
+#include "Entities/Sqm/Sqm.cpp"
 
 using namespace std;
 
-List<Item> RewardItem(int level) {
+List<Item> RewardItem(int level)
+{
     List<Item> rewardItems;
     int itemsQuantity = Rand::Randomize(1, 5);
-     
-    for (int i = 0; i < itemsQuantity; i++) {
-        int indexItem = Rand::Randomize(0, 49); 
+
+    for (int i = 0; i < itemsQuantity; i++)
+    {
+        int indexItem = Rand::Randomize(0, 49);
         Item item = Config::items[indexItem];
 
         rewardItems.Push(Config::items[indexItem]);
     }
-    
+
     return rewardItems;
 }
 
-void InitPlayer(Player& player, int level) {
+void InitPlayer(Player &player, int level)
+{
     List<Item> items = RewardItem(level);
 
-    items.ForEach([&player](Item item, int index){
-        player.Backpack.Push(item);
-    });
+    items.ForEach([&player](Item item, int index)
+                  { player.Backpack.Push(item); });
 }
 
 int main()
-{    
-    int level = 0; //Use this variable to scale difficulty algorithms
+{
+    int level = 0; // Use this variable to scale difficulty algorithms
     bool end = false;
     int currentMenu = 1;
 
@@ -49,217 +51,241 @@ int main()
     PlayerStatusScreen playerStatusScreen;
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
-    
-    InitPlayer(player,level);
+
+    InitPlayer(player, level);
 
     while (!end)
     {
         switch (currentMenu)
         {
-            case 1: //Starting
+        case 1: // Starting
+        {
+            Essentials::Clear();
+            startingScreen.RenderImageText();
+            Essentials::Pause();
+            currentMenu = 6;
+        }
+        break;
+
+        case 2: // Figthing
+        {
+            Essentials::Pause();
+        }
+        break;
+
+        case 3: // Reward
+        {
+            Essentials::Pause();
+        }
+        break;
+
+        case 4: // End Level
+        {
+            Essentials::Pause();
+        }
+        break;
+
+        case 5: // Cenary
+        {
+            Essentials::Pause();
+        }
+        break;
+
+        case 6: // Inventory
+        {
+            int inventoryMenu = -1;
+            int selectedItem = -1;
+            bool inventoryIsOpen = true;
+
+            while (inventoryIsOpen)
             {
                 Essentials::Clear();
-                startingScreen.RenderImageText();
-                Essentials::Pause();
-                currentMenu = 6;
-            }
-            break;
 
-            case 2: //Fi    gthing
-            {
-                Essentials::Pause();
-            }
-            break;
+                player.RenderImageText();
+                playerStatusScreen.RenderImageText(player);
 
-            case 3: //Reward
-            {
-                Essentials::Pause();
-            }
-            break;
+                string options[6] = {
+                    "Enviar item para o cinto\n",
+                    "Usar item\n",
+                    "Descartar item da mochila\n",
+                    "Descartar item do cinto\n",
+                    "Ver item detalhadamente\n",
+                    "Voltar para o jogo\n",
+                };
 
-            case 4: //End Level
-            {
-                Essentials::Pause();
-            }
-            break;
+                cout << "\n- Inventario:\n";
+                cout << "\n   Backpack:\n";
 
-            case 5: //Cenary
-            {
-                Essentials::Pause();
-            }
-            break;
-            
-            case 6: // Inventory
-            {
-                int inventoryMenu = -1;
-                int selectedItem = -1;
-                bool inventoryIsOpen = true;
+                // If the inventory use list structure and show the list items
+                // if(player.Backpack.Size() == 0) {
+                //     cout << "    - Sem nenhum item\n";
+                // }
 
-                while (inventoryIsOpen)
+                cout << "    - Quantidade de itens na mochila:" << player.Backpack.Size();
+
+                // If the inventory use list structure and show the list items
+                // player.Backpack.ForEach([](Item item, int index) {
+                //     cout << "    - " + to_string(index) + " " + item.Name + "\n";
+                // });
+
+                cout << "\n   Belt:\n";
+
+                if (player.Belt.Size() == 0)
                 {
-                    Essentials::Clear();
+                    cout << "    - Sem nenhum item\n";
+                }
 
-                    player.RenderImageText();
-                    playerStatusScreen.RenderImageText(player);
+                player.Belt.ForEach([](Item item, int index)
+                                    { cout << "    - " + to_string(index) + " " + item.Name + "\n"; });
 
-                    string options[6] = {
-                        "Enviar item para o cinto\n",
-                        "Usar item\n",
-                        "Descartar item da mochila\n",
-                        "Descartar item do cinto\n",
-                        "Ver item detalhadamente\n",
-                        "Voltar para o jogo\n",
-                    };
+                if (inventoryMenu == -1 && selectedItem == -1)
+                {
+                    cout << "\n   Comandos:\n";
 
-                    cout << "\n- Inventario:\n";
-                    cout << "\n   Backpack:\n";
-
-                    // If the inventory use list structure and show the list items 
-                    // if(player.Backpack.Size() == 0) {
-                    //     cout << "    - Sem nenhum item\n";
-                    // }
-
-                    cout << "    - Quantidade de itens na mochila:"<< player.Backpack.Size();
-                    
-                    // If the inventory use list structure and show the list items 
-                    // player.Backpack.ForEach([](Item item, int index) {
-                    //     cout << "    - " + to_string(index) + " " + item.Name + "\n";
-                    // });
-
-                    cout << "\n   Belt:\n";
-
-                    if(player.Belt.Size() == 0) {
-                        cout << "    - Sem nenhum item\n";
+                    for (size_t i = 0; i < 6; i++)
+                    {
+                        cout << "    - " << i << " " << options[i];
                     }
 
-                    player.Belt.ForEach([](Item item, int index) {
-                        cout << "    - " + to_string(index) + " " + item.Name + "\n";
-                    });
+                    Essentials::Command<int>("\n- Opcao: ", inventoryMenu);
+                    continue;
+                }
 
-                    if (inventoryMenu == -1 && selectedItem == -1) {
-                        cout << "\n   Comandos:\n";
+                if (inventoryMenu > -1)
+                {
 
-                        for (size_t i = 0; i < 6; i++)
-                        {
-                            cout<<"    - " << i << " " << options[i] ;
-                        }
-                        
-                        Essentials::Command<int>("\n- Opcao: ", inventoryMenu);
-                        continue;
+                    cout << '\n'
+                         << "- Opcao selecionada: " << options[inventoryMenu] << "\n";
+                    switch (inventoryMenu)
+                    {
+                    case 0: // Send to belt
+                    {
+                        cout << "Item enviado para o cinto.\n";
+                        Essentials::Pause();
+                        player.GetItemToBelt();
+                        inventoryIsOpen = false;
                     }
-                    
-                    if(inventoryMenu > -1) {
-                        
-                        cout <<'\n'<< "- Opcao selecionada: " << options[inventoryMenu] << "\n";
-                        switch (inventoryMenu)
+                    break;
+
+                    case 1: // Use item
+                    {
+                        if (selectedItem == -1)
                         {
-                            case 0:
+                            Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                            if (selectedItem == -1)
                             {
-                                cout << "Item enviado para o cinto.\n";
-                                Essentials::Pause();
-                                player.GetItemToBelt();
-                                inventoryIsOpen = false;
-                            }
-                            break;
-
-                            case 1:
-                            {
-                                if(selectedItem == -1) {
-                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
-                                    cout << '\n';
-                                }
-                                else {
-                                    Item item = player.Belt.Get(selectedItem);
-                                    
-                                    if(item.Consumable){
-                                        cout << "- Voce utilizou o item " << item.Name;
-                                        player.UseItem(item);
-                                        inventoryIsOpen = false;
-                                    }
-                                    else {
-                                        cout << "- O item " << item.Name << " nao pode ser consumido";
-                                    }
-                                    cout<<'\n';
-                                    inventoryMenu =-1;
-                                    selectedItem = -1;
-                                    Essentials::Pause();
-                                }
-
-                                continue;
-                            }
-                            break;
-
-                            case 2:
-                            {                     
-                                
-                                // If the inventory use list structure and show the list items 
-                                // Item item = player.Backpack.Get(player.Backpack.Size() - 1);
-                                // player.Backpack.Delete(player.Backpack.Size() - 1);
-                                
-                                Item item = player.Backpack.Pop();
-                                cout << "- Voce removeu da mochila o item " << item.Name;
-                                Essentials::Pause();
-                                inventoryIsOpen = false;
-                                continue;
-                            }
-                            break;
-
-                            case 3:
-                            {
-                                if(selectedItem == -1) {
-                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
-                                    cout << '\n';
-                                }
-                                else {
-                                    Item item = player.Belt.Get(selectedItem);
-                                    player.Belt.Delete(selectedItem);
-                                    cout << "- Voce removeu do cinto o item " << item.Name;
-                                    Essentials::Pause();
-                                    inventoryIsOpen = false;
-                                    continue;
-                                }
-                            }
-                            break;
-
-                            case 4:
-                            {
-                                if(selectedItem == -1) {
-                                    Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
-                                    cout << '\n';
-                                }
-                                else {
-                                    Item item = player.Belt.Get(selectedItem);
-                                    itemStatusScreen.RenderImageText(item);
-                                    Essentials::Pause();
-                                    inventoryIsOpen = false;
-                                }
-                            }
-                            break;
-
-                            case 5:
-                            {
-                                cout << "Saindo do inventário.\n";
-                                inventoryIsOpen = false;
-                            }
-                            break;
-
-                            default:
-                            {
-                                cout << "Opção inválida. Tente novamente.\n";
                                 inventoryMenu = -1;
                             }
-                            break;
+                            cout << '\n';
                         }
+                        else
+                        {
+                            Item item = player.Belt.Get(selectedItem);
+
+                            if (item.Consumable)
+                            {
+                                cout << "- Voce utilizou o item " << item.Name;
+                                player.UseItem(item);
+                                inventoryIsOpen = false;
+                            }
+                            else
+                            {
+                                cout << "- O item " << item.Name << " nao pode ser consumido";
+                            }
+                            cout << '\n';
+                            inventoryMenu = -1;
+                            selectedItem = -1;
+                            Essentials::Pause();
+                        }
+
+                        continue;
+                    }
+                    break;
+
+                    case 2: // Discard item to backpack
+                    {
+
+                        // If the inventory use list structure and show the list items
+                        // Item item = player.Backpack.Get(player.Backpack.Size() - 1);
+                        // player.Backpack.Delete(player.Backpack.Size() - 1);
+
+                        Item item = player.Backpack.Pop();
+                        cout << "- Voce removeu da mochila o item " << item.Name;
+                        Essentials::Pause();
+                        inventoryIsOpen = false;
+                        continue;
+                    }
+                    break;
+
+                    case 3: // Discard item to belt
+                    {
+                        if (selectedItem == -1)
+                        {
+                            Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                            if (selectedItem == -1)
+                            {
+                                inventoryMenu = -1;
+                            }
+                            cout << '\n';
+                        }
+                        else
+                        {
+                            Item item = player.Belt.Get(selectedItem);
+                            player.Belt.Delete(selectedItem);
+                            cout << "- Voce removeu do cinto o item " << item.Name;
+                            Essentials::Pause();
+                            inventoryIsOpen = false;
+                            continue;
+                        }
+                    }
+                    break;
+
+                    case 4: // Item details
+                    {
+                        if (selectedItem == -1)
+                        {
+                            Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
+                            if (selectedItem == -1)
+                            {
+                                inventoryMenu = -1;
+                            }
+                            cout << '\n';
+                        }
+                        else
+                        {
+                            Item item = player.Belt.Get(selectedItem);
+                            itemStatusScreen.RenderImageText(item);
+                            Essentials::Pause();
+                            inventoryIsOpen = false;
+                        }
+                    }
+                    break;
+
+                    case 5: // Return
+                    {
+                        cout << "Saindo do inventário.\n";
+                        inventoryIsOpen = false;
+                        currentMenu = 1;
+                    }
+                    break;
+
+                    default:
+                    {
+                        cout << "Opção inválida. Tente novamente.\n";
+                        inventoryMenu = -1;
+                    }
+                    break;
                     }
                 }
             }
-            break;
+        }
+        break;
 
-            default:
-            {
-                cout << "Opção inválida. Tente novamente." << endl;
-            }
-            break;
+        default:
+        {
+            cout << "Opção inválida. Tente novamente." << endl;
+        }
+        break;
         }
     }
 
