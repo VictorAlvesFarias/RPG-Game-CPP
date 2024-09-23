@@ -1,11 +1,11 @@
 #include <iostream>
 #include <locale>
-#include "utils/List/List.cpp"
-#include "utils/Essentials/Essentials.cpp"
+#include "Utils/List/List.cpp"
+#include "Utils/Essentials/Essentials.cpp"
 #include "Config/Config.cpp"
-#include "utils/Rand/Rand.cpp"
-#include "utils/Stack/Stack.cpp"
-#include "utils/String/String.cpp"
+#include "Utils/Rand/Rand.cpp"
+#include "Utils/Stack/Stack.cpp"
+#include "Utils/String/String.cpp"
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
 #include "Screens/StartingScreen.cpp"
