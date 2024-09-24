@@ -22,7 +22,7 @@ int main()
 {
     int level = 1;
     bool end = false;
-    int currentMenu = 3;
+    int currentMenu = 1;
 
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
@@ -37,8 +37,39 @@ int main()
         {
             Essentials::Clear();
             startingScreen.RenderImageText();
-            Essentials::Pause();
-            currentMenu = 3;
+            bool mainMenuIsOpen = true;
+            int mainMenu;
+            string options[2] = {
+                "Ver inventário\n", 
+                "Continuar\n",
+            };
+
+            while(mainMenuIsOpen){
+                cout << "\n   Comandos:\n";
+                for (size_t i = 0; i < 2; i++)
+                {
+                    cout << "   - " << i << " " << options[i];
+                }
+
+                Essentials::Command<int>("\n- Opcao: ", mainMenu);
+                mainMenuIsOpen = false;
+            }
+
+            switch (mainMenu)
+            {
+                case 0: // Add reward to backpack
+                {
+                    currentMenu = 6;
+                    continue;
+                }
+                case 1:
+                {
+                    currentMenu = 2;
+                    continue;
+                }
+            } 
+            
+            Essentials::Pause(); 
         }
         break;
 
@@ -492,6 +523,7 @@ int main()
                     {
                         cout << "Saindo do inventario.\n";
                         inventoryIsOpen = false;
+                        currentMenu = 1;
                     }
                     break;
 
@@ -514,6 +546,6 @@ int main()
         break;
         }
     }
-
+    
     return 0;
 }

@@ -27,13 +27,17 @@ void Essentials::Pause(){
 void Essentials::RenderImageText(string path) {
     ifstream file(path);
     string linha;
+    try {
+        if (!file.is_open()) {
+            cout << "" << endl;
+        }
 
-    if (!file.is_open()) {
-        throw "Error to open file";
-    }
-
-    while (getline(file, linha)) {
-        cout << linha << endl;
+        string linha;
+        while (getline(file, linha)) {
+            cout << linha << endl;
+        }
+    } catch (const runtime_error& e) {
+        cerr << "Exceção capturada: " << e.what() << endl;
     }
 
     file.close();
