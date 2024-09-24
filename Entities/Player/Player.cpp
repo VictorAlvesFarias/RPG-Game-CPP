@@ -1,14 +1,26 @@
 #include "IPlayer.h"
 #include "../Item/IItem.h" 
 #include "../../Utils/Stack/IStack.h"
+#include "../../services/Reward/IReward.h"
 
 Player::Player(string imageTextPath)
 {
     ImageTextPath = imageTextPath;
+    InitPlayer(Backpack, 1);
 }
 
 Player::Player()
 {
+}
+
+void Player::InitPlayer(Stack<Item>& backpack, int level) {
+    Reward reward;
+    List<Item> items = reward.RewardItem(level);
+
+    items.ForEach([&backpack](Item item, int index){
+        backpack.Push(item); 
+    });
+
 }
 
 bool Player::UseItem(Item item)

@@ -14,35 +14,9 @@
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
 #include "Entities/Sqm/Sqm.cpp"   
-using namespace std;
+#include "Services/Reward/Reward.cpp"   
 
-//#include "Services/Reward/Reward.cpp"  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-List<Item> RewardItem(int level) {
-    List<Item> rewardItems;
- 
-     int itemsQuantity = Rand::Randomize(0, 5);
-    
-    for (int i = 0; i < itemsQuantity; i++) {
-        int indexItem = Rand::Randomize(0, 49); 
-        
-        Item item = Config::items[indexItem]; 
-        
-        rewardItems.Push(item);
-    }
-    
-    return rewardItems;
-}
-
-void InitPlayer(Player& player, int level) {
- 
-
-    List<Item> items = RewardItem(level);
-
-    items.ForEach([&player](Item item, int index){
-        player.Backpack.Push(item);
-    });
-}
+using namespace std; 
 
 int main()
 {    
@@ -54,10 +28,7 @@ int main()
     PlayerStatusScreen playerStatusScreen;
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
-   // ShowMenu(RewardItem(1)); //meti ai pra testar a sapecage maluca
-
-    InitPlayer(player,level); 
-
+  
     while (!end)
     {
         switch (currentMenu)
@@ -79,7 +50,9 @@ int main()
 
             case 3: //Reward
             {
-                List<Item> items = RewardItem(5);
+                Reward reward;
+
+                List<Item> items = reward.RewardItem(5);
 
                 if(items.Size() == 0){
                     cout << "Ops, Você não encontrou nenhum item.\n";
@@ -90,7 +63,7 @@ int main()
                 cout << "\nItens ganhados:\n";
  
                 items.ForEach([](Item item, int index) {
-                        cout << "    - " + to_string(index) + " " + item.Name + "\n";
+                        cout << "    - " + to_string(index + 1) + " " + item.Name + "\n";
                     });
 
                 int choice;
@@ -134,9 +107,8 @@ int main()
                 else {
                     cout << "Escolha inválida. Tente novamente.\n";
                 }
-                break;
-
- 
+                 
+                break; 
             }
             break;
 

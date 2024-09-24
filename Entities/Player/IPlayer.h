@@ -28,4 +28,5 @@ class Player : public BaseEntity {
         int GetMaxHealth();
         int GetDamage();
         void HealLife(int quantity);
+        void InitPlayer(Stack<Item> &backpack, int level);
 };
