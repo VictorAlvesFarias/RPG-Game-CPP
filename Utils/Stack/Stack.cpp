@@ -40,11 +40,14 @@ T Stack<T>::Pop() {
 	};
 	
 	StackNode* p = TopNode;
+	T response = TopNode->GenericValue;
 	TopNode = TopNode->NextNode;
 
+	Counter--;
+	
 	delete p;
-
-	return 	TopNode->GenericValue;
+	
+	return response;
 }
 
 template <typename T>
@@ -70,4 +73,3 @@ template <typename T>
 T Stack<T>::Top() {
 	return TopNode->GenericValue;
 }
-
