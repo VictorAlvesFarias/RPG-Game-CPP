@@ -6,6 +6,18 @@ Player::Player(string imageTextPath)
     ImageTextPath = imageTextPath;
 }
 
+Player::Player(int health, int damage, string imageTextPath){
+    EnemyHealth = health;
+    EnemyDamage = damage;
+    ImageTextPath = imageTextPath;
+}
+
+Player::Player(int health, int damage) {
+    EnemyHealth = health;
+    EnemyMaxHealth = health;
+    EnemyDamage = damage;
+}
+
 Player::Player()
 {
 }
@@ -43,6 +55,18 @@ int Player::GetMaxHealth() {
     return response; 
 }
 
+int Player::GetMaxHealthEnemy() {
+    return EnemyMaxHealth; 
+}
+
+int Player::GetHealthEnemy(){
+    return EnemyHealth;
+}
+
+int Player::GetDamageEnemy() {
+    return EnemyDamage;
+}
+
 int Player::GetDamage() {
     int response = Damage;
 
@@ -61,6 +85,16 @@ void Player:: HealLife(int quantity) {
     }
     else {
         Health += quantity;
+    }
+}
+
+void Player:: HealLifeEnemy(int quantity) {
+    cout << "O inimigo se curou em:" << quantity << endl;
+    if((EnemyHealth + quantity) > EnemyMaxHealth ){
+        EnemyHealth = MaxHealth;
+    }
+    else {
+       EnemyHealth += quantity;
     }
 }
 
@@ -95,4 +129,35 @@ bool Player::GetItemToBelt()
     {
         return false;
     }
+}
+
+void Player::SetLevel(int level, Player player) {
+    player.Health += 2*level;
+    player.Damage += 2*level;
+}
+
+void Player::Atack(Player& enemy) {
+    cout << "Você atacou o inimigo e causou: " << Damage << " de dano" << endl;
+    enemy.EnemyHealth -= Damage;
+    cout << "O inimigo agora tem: " << enemy.EnemyHealth  << " pontos de vida" << endl;
+
+}
+
+void Player::AtackAsEnemy(Player& player) {
+    cout << "O inimigo atacou e causou: " << EnemyDamage << " de dano" << endl;
+    player.Health -= EnemyDamage;
+    cout << "O Heroi agora tem: " << player.Health  << " pontos de vida" << endl;
+}
+
+void Player::Defend(){
+    cout << "O heroi conseguiu defender o ataque!" << endl;
+}
+
+void Player::GenerateBonus(Player& entitie) {
+   int bonus = rand() % 10 + 1; 
+
+   entitie.Health += bonus;
+   entitie.Damage += bonus;
+   entitie.EnemyHealth += bonus;
+   entitie.EnemyDamage += bonus;
 }

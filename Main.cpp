@@ -46,10 +46,12 @@ int main()
     int level = 0; // Use this variable to scale difficulty algorithms
     bool end = false;
     int currentMenu = 1;
+    Rand rand;
 
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
     ItemStatusScreen itemStatusScreen;
+
     Player player("Assets/Text-Images/Player/player.txt");
 
     InitPlayer(player, level);
@@ -63,13 +65,148 @@ int main()
             Essentials::Clear();
             startingScreen.RenderImageText();
             Essentials::Pause();
-            currentMenu = 6;
+            currentMenu = 2;
         }
         break;
 
         case 2: // Figthing
         {
-            Essentials::Pause();
+
+            PlayerStatusScreen playerStatusScreen;
+            player.SetLevel(level, player);
+            int health = rand.Randomize(20, 40);
+            int damage = rand.Randomize(10, 20);
+            bool endFight = false;
+            int numberActions = 0;
+            string options[3] = {
+                    "Atacar!\n",
+                    "Defender!\n",
+                    "Sair do jogo\n",
+            };
+
+
+            int action = -1;
+
+            Player enemy(health, damage);
+            enemy.SetLevel(level, enemy);
+            enemy.GenerateBonus(enemy);
+
+            cout << "Um inimigo apareceu, o que deseja fazer?" << endl;
+
+
+            while (!endFight)
+            {
+                playerStatusScreen.RenderImageText(player);
+                playerStatusScreen.RenderImageTextEnemy(enemy);
+
+                cout << "Qual a sua proxima acao?" << endl;
+                for (size_t i = 0; i < 3; i++)
+                {
+                    cout << "    - " << i << " " << options[i];
+                }
+                cin >> action;
+                switch (action)
+                {
+                case 0:
+                {
+                    //  player.Atack(enemy);
+
+                    if (numberActions == 2)
+                    {
+
+                        //  numberActions++;
+                        if (enemy.EnemyHealth < 0)
+                        {
+                            cout << "O inimigo foi derrotado!" << endl;
+
+                            endFight = true;
+                            currentMenu = 3;
+
+                            continue;
+                        }
+
+                        int chance = (enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy());
+
+
+                        if (rand.RandomChance(chance*2))
+                        {
+
+                            enemy.HealLifeEnemy((enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy())/3);
+                            cout << (enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy())/3;
+                        } 
+                        else
+                        {
+
+                            enemy.AtackAsEnemy(player);
+
+                            if (player.Health < 0) 
+                            {
+                                cout << "O heroi foi derrotado" << endl;
+                                endFight = true;
+                            }
+
+                            if (rand.RandomChance(50)) 
+                            {
+
+                                enemy.AtackAsEnemy(player);
+
+                                if (player.Health < 0) {
+                                    cout << "O heroi foi derrotado";
+                                    endFight = true;
+                                }
+                            }
+                        }
+
+                        numberActions = 0;
+
+                    }
+                    else
+                    {
+                        player.Atack(enemy);
+                        numberActions++;
+
+                        if (enemy.EnemyHealth < 0)
+                        {
+                            cout << "O inimigo foi derrotado!";
+                            endFight = true;
+                            currentMenu = 3;
+                            continue;
+                        }
+                    }
+
+                    action = -1;
+                    //continue;
+
+                    break;
+                }
+
+                case 1:
+                {
+                    if (rand.RandomChance(40))
+                    {
+                        player.Defend();
+                        action = -1;
+                        continue;
+                    }
+                    cout << "O heroi não conseguiu denfender!";
+                    enemy.AtackAsEnemy(player);
+                    if (player.Health < 0)
+                    {
+                        cout << "O heroi foi derrotado";
+                        endFight = true;
+                    }
+                    action = -1;
+                    continue;
+                }
+                break;
+                // case inventory
+                case 3:
+                {
+
+                }
+                break;
+                }
+            }
         }
         break;
 
