@@ -20,14 +20,16 @@ using namespace std;
 
 int main()
 {
-    int level = 0; // Use this variable to scale difficulty algorithms
+    int level = 1; // Use this variable to scale difficulty algorithms
     bool end = false;
     int currentMenu = 1;
-
+    int numberReward = 0;
+    int previousLevel = 0;
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
     ItemStatusScreen itemStatusScreen;
     Player player("Assets/Text-Images/Player/player.txt");
+    int numberRewardLevel = 0;
 
     while (!end)
     {
@@ -39,6 +41,7 @@ int main()
             startingScreen.RenderImageText();
             bool mainMenuIsOpen = true;
             int mainMenu;
+
             string options[2] = {
                 "Ver inventário\n", 
                 "Continuar\n",
@@ -57,14 +60,48 @@ int main()
 
             switch (mainMenu)
             {
-                case 0: // Add reward to backpack
+                case 0: 
                 {
                     currentMenu = 6;
                     continue;
                 }
                 case 1:
                 {
-                    currentMenu = 2;
+                    if(numberReward == 1){
+                        currentMenu = 2;
+                        continue;
+                    }
+                    int rewardRef = 2 + numberRewardLevel;
+
+                    if(numberReward == 2 || (numberReward ==  rewardRef && numberRewardLevel > 0)){
+                        numberRewardLevel = numberReward;
+
+                        string optScreens[9] = {
+                            "wood-house.txt",
+                            "montain-house-type-1,txt",
+                            "montain-house-type-2.txt",
+                            "japonese-house.txt",
+                            "default-house-type-1.txt",
+                            "default-house-type-2.tzt",
+                            "default-house-type-3.txt",
+                            "default-house-type-4.txt",
+                            "caslte.txt",
+                        };
+
+                        int randomIndex = std::rand() % 9;
+
+                        Essentials::RenderImageText("Assets/Text-Images/Scenes/" + optScreens[randomIndex]);
+
+                        level++;
+
+                    }
+                    bool isBattle = Rand::RandomChance(50);
+                    if(isBattle){
+                         currentMenu = 2;
+                         continue;
+                    }
+                    currentMenu = 3;
+                    numberReward++;
                     continue;
                 }
             } 
@@ -75,7 +112,10 @@ int main()
 
         case 2: // Figthing
         {
-            Essentials::Pause();
+            cout << "Entrou na batalha";
+            currentMenu = 3;
+            numberReward++;
+            break;
         }
         break;
 
@@ -96,8 +136,8 @@ int main()
                 "Ver item da recompensa detalhadamente\n",
                 "Ver item do cinto detalhadamente\n",
                 "Continuar\n",
-            };
-
+            }; 
+          
             while (rewardIsOpen)
             {
                 Essentials::Clear();
@@ -110,7 +150,7 @@ int main()
                     rewardIsOpen = false;
                     break;
                 }
-
+            
                 cout << "\n- Inventario:\n";
                 cout << "\n   Mochila:\n";
 
@@ -314,6 +354,7 @@ int main()
                     {
                         cout << "Continuando...\n";
                         rewardIsOpen = false;
+                        currentMenu = 1;
                         break;
                     }
 
@@ -326,6 +367,8 @@ int main()
                 }
             }
         }
+
+        
         break;
 
         case 4: // End Level

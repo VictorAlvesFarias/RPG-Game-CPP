@@ -43,3 +43,17 @@ void Essentials::RenderImageText(string path) {
     file.close();
 }
 
+// void Essentials::RenderImageText(string path) {
+//     ifstream file(path);
+//     string linha;
+
+//     if (!file.is_open()) {
+//         throw "Error to open file";
+//     }
+
+//     while (getline(file, linha)) {
+//         cout << linha << endl;
+//     }
+
+//     file.close();
+// }
