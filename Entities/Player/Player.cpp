@@ -61,12 +61,10 @@ int Player::GetDamage() {
 
     Belt.ForEach([&response](Item item){ 
         if(item.Consumable == false){
-            cout << "Item damage: " << item.Damage << endl;  // Debug: Verifica o valor do dano de cada item
             response += item.Damage;
         }
     });
 
-    cout << "Total damage: " << response << endl;  // Debug: Verifica o dano total após iterar
     return response; 
 }
 
