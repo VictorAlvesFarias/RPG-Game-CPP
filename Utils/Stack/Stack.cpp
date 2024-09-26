@@ -73,4 +73,3 @@ template <typename T>
 T Stack<T>::Top() {
 	return TopNode->GenericValue;
 }
-
