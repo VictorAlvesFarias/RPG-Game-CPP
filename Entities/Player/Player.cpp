@@ -1,7 +1,7 @@
 #include "IPlayer.h"
 #include "../Item/IItem.h" 
 #include "../../Utils/Stack/IStack.h"
-#include "../../services/Reward/IReward.h"
+#include "../../Services/Reward/IReward.h"
 
 Player::Player(string imageTextPath)
 {
