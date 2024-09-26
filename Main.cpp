@@ -20,7 +20,7 @@ using namespace std;
 
 int main()
 {
-    int level = 1; // Use this variable to scale difficulty algorithms
+    int level = 1;
     bool end = false;
     int currentMenu = 1;
     int numberReward = 0;
