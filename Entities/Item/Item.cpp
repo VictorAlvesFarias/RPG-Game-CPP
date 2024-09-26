@@ -18,7 +18,7 @@ void SetLevel(int level, Item item){
 	item.Damage += 2*level;
 }
 
-void GenerateBonus(Item item){ 
+void GenerateBonus(Item& item){ 
     int bonus = rand() % 10 + 1; 
 
     item.Damage += bonus;          
