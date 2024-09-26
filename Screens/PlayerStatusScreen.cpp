@@ -15,7 +15,7 @@ class PlayerStatusScreen : public BaseScreen
         cout << "- Slots no cinto: " << player.BeltSlots  << '\n'; 
     };
 
-        public:void RenderImageTextEnemy(Player& enemy)
+    public:void RenderImageTextEnemy(Player& enemy)
     {
         String strExtension;
     

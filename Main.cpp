@@ -116,7 +116,6 @@ int main()
         case 2: // Figthing
         {
 
-            PlayerStatusScreen playerStatusScreen;
             player.SetLevel(level, player);
             int health = rand.Randomize(20, 40);
             int damage = rand.Randomize(10, 20);
