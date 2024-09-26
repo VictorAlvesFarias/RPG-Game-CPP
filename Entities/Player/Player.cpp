@@ -1,9 +1,12 @@
 #include "IPlayer.h"
-#include "../Item/IItem.h"
+#include "../Item/IItem.h" 
+#include "../../Utils/Stack/IStack.h"
+#include "../../Services/Reward/IReward.h"
 
 Player::Player(string imageTextPath)
 {
     ImageTextPath = imageTextPath;
+    InitPlayer(Backpack, 1);
 }
 
 Player::Player(int health, int damage, string imageTextPath){
@@ -20,6 +23,16 @@ Player::Player(int health, int damage) {
 
 Player::Player()
 {
+}
+
+void Player::InitPlayer(Stack<Item>& backpack, int level) {
+    Reward reward;
+    List<Item> items = reward.RewardItem(level);
+
+    items.ForEach([&backpack](Item item, int index){
+        backpack.Push(item); 
+    });
+
 }
 
 bool Player::UseItem(Item item)

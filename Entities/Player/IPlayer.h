@@ -42,4 +42,5 @@ class Player : public BaseEntity {
         void AtackAsEnemy(Player& player);
         void Defend();
         void GenerateBonus(Player& entitie);
+        void InitPlayer(Stack<Item> &backpack, int level);
 };
