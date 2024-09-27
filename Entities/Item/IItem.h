@@ -13,6 +13,7 @@ class Item {
 	public: int MaxHealth = 100;	
 	public: int BeltSlots = 1;
 	public: int Damage = 100;
-	public: void GenerateBonus(Item item);
-	public: void SetLevel(int level, Item item);
+	public: void GenerateBonus(int bonusPercentage);
+	public: void GenerateBonus();
+	public: void SetLevel(int level);
 };

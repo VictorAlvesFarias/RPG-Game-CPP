@@ -9,38 +9,27 @@ using namespace std;
 
 class Player : public BaseEntity {
     public:
-        Player(string imageTextPath);
-        Player(int health, int damage, string imageTextPath);
-        Player(int health, int damage);
-        Player();
-
         string Name = "";
-        int Health = 100;
-        int EnemyHealth;
         int MaxHealth = 1000;
-        int EnemyMaxHealth;
+        int Health = 0;
         int Level = 1000;
         int Damage = 10;
-        int EnemyDamage = 5;
         int BeltSlots = 10;
         List<Item> Belt;
         Stack<Item> Backpack;
+
+        Player(string imageTextPath, List<Item> items);
 
         bool UseItem(Item item);
         bool GetItemToBelt();
         bool DiscardItemToBelt(int index);
         bool DiscardItemToBackpack();
         int GetMaxHealth();
-        int GetMaxHealthEnemy();
-        int GetHealthEnemy();
         int GetDamage();
-        int GetDamageEnemy();
+        int GetBeltSlotsQuantity();
         void HealLife(int quantity);
-        void HealLifeEnemy(int quantity);
-        void SetLevel(int level, Player player);
-        void Atack(Player& enemy);
-        void AtackAsEnemy(Player& player);
-        void Defend();
-        void GenerateBonus(Player& entitie);
-        void InitPlayer(Stack<Item> &backpack, int level);
+        void SetLevel(int level);
+        int Atack(Player& enemy);
+        void GenerateBonus(int bonus);
+        void GenerateBonus();
 };

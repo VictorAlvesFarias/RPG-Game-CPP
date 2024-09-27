@@ -4,7 +4,7 @@
 using namespace std;
 
 Rand:: Rand(){
-
+    srand(time(0));
 }
 
 int Rand::Randomize(int min, int max) {

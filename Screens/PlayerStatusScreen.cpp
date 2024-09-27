@@ -14,13 +14,4 @@ class PlayerStatusScreen : public BaseScreen
         cout << "- Damage: " << player.GetDamage() << '\n'; 
         cout << "- Slots no cinto: " << player.BeltSlots  << '\n'; 
     };
-
-    public:void RenderImageTextEnemy(Player& enemy)
-    {
-        String strExtension;
-    
-        cout << "-----------------------------ENEMY STATUS----------------------------------\n"; 
-        cout << "- Life: " << strExtension.PadStart(enemy.EnemyHealth, to_string(enemy.GetMaxHealthEnemy()).size(), '0') << '/' << enemy.GetMaxHealthEnemy()<< '\n';
-        cout << "- Damage: " << enemy.GetDamage() << '\n'; 
-    };
 };

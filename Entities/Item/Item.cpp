@@ -10,18 +10,29 @@ Item::Item(string name, bool consumable, int healing, int maxHealth, int beltSlo
 	Damage = damage;
 }
 
-Item::Item() { }
+Item::Item() {}
 
-void SetLevel(int level, Item item){
-	item.Healing += 2*level;
-	item.MaxHealth += 2*level;
-	item.Damage += 2*level;
+void Item::SetLevel(int level)
+{
+	Healing += 2 * level;
+	MaxHealth += 2 * level;
+	Damage += 2 * level;
 }
 
-void GenerateBonus(Item& item){ 
-    int bonus = rand() % 10 + 1; 
+void Item::GenerateBonus(int bonusChance)
+{
+	int bonus = rand() % bonusChance + 1;
 
-    item.Damage += bonus;          
-    item.Healing += bonus;     
-    item.MaxHealth += bonus / 2; 
+	Damage += bonus;
+	Healing += bonus;
+	MaxHealth += bonus;
+}
+
+void Item::GenerateBonus()
+{
+	int bonus = rand() % Config::Bonus + 1;
+
+	Damage += bonus;
+	Healing += bonus;
+	MaxHealth += bonus / 2;
 }

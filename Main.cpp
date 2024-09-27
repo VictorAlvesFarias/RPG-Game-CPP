@@ -9,12 +9,14 @@
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
 #include "Screens/StartingScreen.cpp"
+#include "Screens/SqmScreen.cpp"
 #include "Screens/PlayerStatusScreen.cpp"
+#include "Screens/EnemyStatusScreen.cpp"
 #include "Screens/ItemStatusScreen.cpp"
 #include "Entities/Item/Item.cpp"
 #include "Entities/Player/Player.cpp"
 #include "Entities/Sqm/Sqm.cpp"
-#include "Services/Reward/Reward.cpp"
+#include "Services/Reward/RewardService.cpp"
 
 using namespace std;
 
@@ -23,148 +25,103 @@ int main()
     int level = 1;
     bool end = false;
     int currentMenu = 1;
-    Rand rand;
-
     int numberReward = 0;
     int previousLevel = 0;
+    int rewardContext = 0;
+
+    RewardService reward;
+    
+    
     StartingScreen startingScreen;
     PlayerStatusScreen playerStatusScreen;
+    EnemyStatusScreen enemyStatusScreen;
     ItemStatusScreen itemStatusScreen;
+    SqmScreen sqmScreen;
+    Player player("Assets/Text-Images/Player/player.txt", reward.RewardItem(level));
+    string enemiesScreeens[7] = {
+        "Assets/Text-Images/Enemies/enemy-type-1.txt",
+        "Assets/Text-Images/Enemies/enemy-type-2.txt",
+        "Assets/Text-Images/Enemies/enemy-type-3.txt",
+        "Assets/Text-Images/Enemies/enemy-type-4.txt",
+        "Assets/Text-Images/Enemies/enemy-type-5.txt",
+        "Assets/Text-Images/Enemies/enemy-type-6.txt",
+        "Assets/Text-Images/Enemies/enemy-type-7.txt",
+    };
+    string screens[9] = {
+        "Assets/Text-Images/Scenes/wood-house.txt",
+        "Assets/Text-Images/Scenes/montain-house-type-1,txt",
+        "Assets/Text-Images/Scenes/montain-house-type-2.txt",
+        "Assets/Text-Images/Scenes/japonese-house.txt",
+        "Assets/Text-Images/Scenes/default-house-type-1.txt",
+        "Assets/Text-Images/Scenes/default-house-type-2.tzt",
+        "Assets/Text-Images/Scenes/default-house-type-3.txt",
+        "Assets/Text-Images/Scenes/default-house-type-4.txt",
+        "Assets/Text-Images/Scenes/caslte.txt",
+    };
+    string sqmImage = screens[Rand::Randomize(0, 9)];
 
-    Player player("Assets/Text-Images/Player/player.txt");
-    int numberRewardLevel = 0;
-    string sqmImage = "";
 
     while (!end)
     {
         switch (currentMenu)
         {
-            case 1: // Starting
-            {
-                Essentials::Clear();
 
-                if(sqmImage == ""){
-                    startingScreen.RenderImageText(); 
-                }
-                else{
-                    Essentials::RenderImageText(sqmImage);
-                }
-                bool mainMenuIsOpen = true;
-                int mainMenu;
-
-                string options[2] = {
-                    "Ver inventário\n", 
-                    "Continuar\n",
-                };
-
-                while(mainMenuIsOpen){
-                    cout << "\n   Comandos:\n";
-                    for (size_t i = 0; i < 2; i++)
-                    {
-                        cout << "   - " << i << " " << options[i];
-                    }
-
-                    Essentials::Command<int>("\n- Opcao: ", mainMenu);
-                    mainMenuIsOpen = false;
-                }
-
-                switch (mainMenu)
-                {
-                    case 0: 
-                    {
-                        currentMenu = 6;
-                        continue;
-                    }
-                    case 1:
-                    {
-                        if(numberReward == 1){
-                            currentMenu = 2;
-                            continue;
-                        }
-                        int rewardRef = 2 + numberRewardLevel;
-                        cout << "Reward ref " << rewardRef << endl;
-                        cout << "Reward count " << numberReward << endl;
-
-                        if(numberReward == 2 || (numberReward ==  rewardRef && numberRewardLevel > 0)){
-                            numberRewardLevel = numberReward;
-
-                            string optScreens[9] = {
-                                "wood-house.txt",
-                                "montain-house-type-1,txt",
-                                "montain-house-type-2.txt",
-                                "japonese-house.txt",
-                                "default-house-type-1.txt",
-                                "default-house-type-2.tzt",
-                                "default-house-type-3.txt",
-                                "default-house-type-4.txt",
-                                "caslte.txt",
-                            };
-
-                            int randomIndex = std::rand() % 9;
-                            sqmImage = "Assets/Text-Images/Scenes/" + optScreens[randomIndex];
-
-                            level++; 
-                        }
-                        bool isBattle = Rand::RandomChance(50);
-                        if(isBattle){
-                            currentMenu = 2;
-                            continue;
-                        }
-                        currentMenu = 3;
-                        numberReward++;
-                        continue;
-                    }
-             }
-
+        case 1: // Starting
+        {
+            Essentials::Clear();
+            startingScreen.RenderImageText();
+            Essentials::Pause();
+            currentMenu = 7;
         }
         break;
 
         case 2: // Figthing
-        {  
-            int health = rand.Randomize(20, 40);
- 
-            int damage = rand.Randomize(10, 20);
+        {
+            int health = Rand::Randomize(20, 40);
+            int damage = Rand::Randomize(10, 20);
             bool endFight = false;
             int numberActions = 0;
-            string options[3] = {
-                    "Atacar!\n",
-                    "Defender!\n",
-                    "Sair do jogo\n",
-            };
-            cout << "Entrou aq 134: "  << endl;
-
-
             int action = -1;
 
-            Player enemy(health, damage);
-            enemy.SetLevel(level, enemy);
-            enemy.GenerateBonus(enemy);
+            Player enemy(enemiesScreeens[Rand::Randomize(0, 7)], reward.RewardItem(level));
+            string options[2] = {
+                "Atacar\n",
+                "Defender\n",
+            };
 
-            cout << "Um inimigo apareceu, o que deseja fazer?" << endl;
-
+            enemy.SetLevel(level);
+            enemy.GenerateBonus();
+            cout << "- Voce encontrou um inmigo, mate ele!" << endl;
 
             while (!endFight)
             {
-                playerStatusScreen.RenderImageText(player);
-                playerStatusScreen.RenderImageTextEnemy(enemy);
+                Essentials::Clear();
 
-                cout << "Qual a sua proxima acao?" << endl;
-                for (size_t i = 0; i < 3; i++)
+                enemy.RenderImageText();
+                playerStatusScreen.RenderImageText(player);
+                enemyStatusScreen.RenderImageText(enemy);
+
+                if (action == -1)
                 {
-                    cout << "    - " << i << " " << options[i];
+                    cout << "\n   Comandos:\n";
+
+                    for (size_t i = 0; i < 2; i++)
+                    {
+                        cout << "    - " << i << " " << options[i];
+                    }
+
+                    Essentials::Command<int>("\n- Opcao: ", action);
+
+                    continue;
                 }
-                cin >> action;
+
                 switch (action)
                 {
                 case 0:
                 {
-                    //  player.Atack(enemy);
-
                     if (numberActions == 2)
                     {
-
-                        //  numberActions++;
-                        if (enemy.EnemyHealth < 0)
+                        if (enemy.Health <= 0)
                         {
                             cout << "O inimigo foi derrotado!" << endl;
 
@@ -174,32 +131,32 @@ int main()
                             continue;
                         }
 
-                        int chance = (enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy());
+                        int chance = (enemy.GetMaxHealth() - enemy.Health);
 
-
-                        if (rand.RandomChance(chance*2))
+                        if (Rand::RandomChance(chance * 2))
                         {
-
-                            enemy.HealLifeEnemy((enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy())/3);
-                            cout << (enemy.GetMaxHealthEnemy() - enemy.GetHealthEnemy())/3;
-                        } 
+                            enemy.HealLife((enemy.GetMaxHealth() - enemy.Health) / 3);
+                            cout << (enemy.GetMaxHealth() - enemy.Health) / 3;
+                        }
                         else
                         {
+                            int enemyDamageAtack = enemy.Atack(player);
+                            cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
 
-                            enemy.AtackAsEnemy(player);
-
-                            if (player.Health < 0) 
+                            if (player.Health < 0)
                             {
                                 cout << "O heroi foi derrotado" << endl;
                                 endFight = true;
                             }
 
-                            if (rand.RandomChance(50)) 
+                            if (Rand::RandomChance(50))
                             {
 
-                                enemy.AtackAsEnemy(player);
+                                int enemyDamageAtack = enemy.Atack(player);
+                                cout << "O inimigo te atacou novamente e causou: " << enemyDamageAtack << " de dano" << endl;
 
-                                if (player.Health < 0) {
+                                if (player.Health < 0)
+                                {
                                     cout << "O heroi foi derrotado";
                                     endFight = true;
                                 }
@@ -207,14 +164,14 @@ int main()
                         }
 
                         numberActions = 0;
-
                     }
                     else
                     {
-                        player.Atack(enemy);
+                        int playerDamageAtack = player.Atack(enemy);
+                        cout << "Você atacou o inimigo e causou: " << playerDamageAtack << " de dano" << endl;
                         numberActions++;
 
-                        if (enemy.EnemyHealth < 0)
+                        if (enemy.Health < 0)
                         {
                             cout << "O inimigo foi derrotado!";
                             endFight = true;
@@ -224,21 +181,22 @@ int main()
                     }
 
                     action = -1;
-                    //continue;
-
-                    break;
                 }
+                break;
 
                 case 1:
                 {
-                    if (rand.RandomChance(40))
+                    if (Rand::RandomChance(40))
                     {
-                        player.Defend();
+                        cout << "O heroi conseguiu defender o ataque!" << endl;
                         action = -1;
                         continue;
                     }
+
                     cout << "O heroi não conseguiu denfender!";
-                    enemy.AtackAsEnemy(player);
+                    int enemyDamageAtack = enemy.Atack(player);
+                    cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
+
                     if (player.Health < 0)
                     {
                         cout << "O heroi foi derrotado";
@@ -247,23 +205,24 @@ int main()
                     action = -1;
                     continue;
                 }
-                break; 
-            } 
-        } 
+                break;
+                }
+            }
+
             currentMenu = 3;
             numberReward++;
+
             break;
-    }
+        }
         break;
 
         case 3: // Reward
         {
-            Reward reward;
-            List<Item> items = reward.RewardItem(5);
             int rewardMenu = -1;
             int selectedItem = -1;
             bool rewardIsOpen = true;
 
+            List<Item> items = reward.RewardItem(level);
             string options[8] = {
                 "Colocar recompensa na mochila\n",
                 "Colocar recompensa no cinto\n",
@@ -273,21 +232,24 @@ int main()
                 "Ver item da recompensa detalhadamente\n",
                 "Ver item do cinto detalhadamente\n",
                 "Continuar\n",
-            }; 
-          
+            };
+
             while (rewardIsOpen)
             {
                 Essentials::Clear();
-                Essentials::RenderImageText("Assets/Text-Images/Mis/coin.txt");
+                Essentials::RenderImageText("Assets/Text-Images/Misc/coin.txt");
 
                 if (items.Size() == 0)
                 {
-                    cout << "Ops, Voce nao encontrou nenhum item.\n";
+                    cout << "- Ops, parece que esse local esta vazio, voce nao encontrou nenhum item.\n";
                     Essentials::Pause();
                     rewardIsOpen = false;
                     break;
                 }
-            
+                cout << "\n- Itens ganhos:\n";
+                items.ForEach([](Item item, int index)
+                              { cout << "    - " + to_string(index) + " " + item.Name + "\n"; });
+
                 cout << "\n- Inventario:\n";
                 cout << "\n   Mochila:\n";
 
@@ -303,10 +265,6 @@ int main()
 
                 player.Belt.ForEach([](Item item, int index)
                                     { cout << "    - " + to_string(index) + " " + item.Name + "\n"; });
-
-                cout << "\n   Itens ganhados:\n";
-                items.ForEach([](Item item, int index)
-                              { cout << "    - " + to_string(index) + " " + item.Name + "\n"; });
 
                 if (rewardMenu == -1 && selectedItem == -1)
                 {
@@ -333,7 +291,7 @@ int main()
                             Essentials::Command<int>("  Selecione o item ( -1 para cancelar ): ", selectedItem);
                             cout << '\n';
                         }
-                        else if (selectedItem > -1 && selectedItem <= items.Size())
+                        else if (selectedItem > -1 && player.GetBeltSlotsQuantity() <= items.Size())
                         {
                             Item item = items.Get(selectedItem);
                             player.Backpack.Push(item);
@@ -359,7 +317,7 @@ int main()
                             if (player.Belt.Size() < player.BeltSlots)
                             {
                                 Item item = items.Get(selectedItem);
-                                items.Delete(selectedItem);     
+                                items.Delete(selectedItem);
                                 player.Belt.Push(item);
                                 cout << "Item '" << item.Name << "' adicionado ao cinto.\n";
                             }
@@ -491,7 +449,7 @@ int main()
                     {
                         cout << "Continuando...\n";
                         rewardIsOpen = false;
-                        currentMenu = 1;
+                        currentMenu = 7;
                         break;
                     }
 
@@ -503,20 +461,6 @@ int main()
                     }
                 }
             }
-        }
-
-        
-        break;
-
-        case 4: // End Level
-        {
-            Essentials::Pause();
-        }
-        break;
-
-        case 5: // Cenary
-        {
-            Essentials::Pause();
         }
         break;
 
@@ -630,7 +574,7 @@ int main()
                     }
                     break;
 
-                    case 2: // Discard item to backpack
+                    case 2: // Discard item from backpack
                     {
 
                         // If the inventory use list structure and show the list items
@@ -645,7 +589,7 @@ int main()
                     }
                     break;
 
-                    case 3: // Discard item to belt
+                    case 3: // Discard item from belt
                     {
                         if (selectedItem == -1)
                         {
@@ -693,7 +637,7 @@ int main()
                     {
                         cout << "Saindo do inventário.\n";
                         inventoryIsOpen = false;
-                        currentMenu = 1;
+                        currentMenu = 7;
                     }
                     break;
 
@@ -709,6 +653,72 @@ int main()
         }
         break;
 
+        case 7: // Scene
+        {
+
+            bool mainMenuIsOpen = true;
+            int mainMenu;
+
+            string options[2] = {
+                "Ver inventário\n",
+                "Continuar\n",
+            };
+
+            Essentials::Clear();
+            Essentials::RenderImageText(sqmImage);
+            sqmScreen.RenderImageText(level);
+            cout << "\n \n- Continue sua jornada heroi:\n";
+            cout << "\n   Comandos:\n";
+
+            for (size_t i = 0; i < 2; i++)
+            {
+                cout << "   - " << i << " " << options[i];
+            }
+
+            Essentials::Command<int>("\n- Opcao: ", mainMenu);
+            mainMenuIsOpen = false;
+
+            switch (mainMenu)
+            {
+            case 0:
+            {
+                currentMenu = 6;
+                continue;
+            }
+
+            case 1:
+            {
+                bool isBattle = Rand::RandomChance(Config::BattleChace);
+                int rewardRef = 2 + rewardContext;
+
+                if (numberReward == 1)
+                {
+                    currentMenu = 2;
+                    continue;
+                }
+
+                if (numberReward == 2 || (numberReward == rewardRef && rewardContext > 0))
+                {
+                    rewardContext = numberReward;
+                    sqmImage = screens[Rand::Randomize(0, 9)];
+                    level++;
+                }
+
+                if (isBattle)
+                {
+                    currentMenu = 2;
+                    continue;
+                }
+
+                currentMenu = 3;
+                numberReward++;
+
+                continue;
+            }
+            }
+        }
+        break;
+
         default:
         {
             cout << "Opcao invalida. Tente novamente." << endl;
@@ -716,6 +726,6 @@ int main()
         break;
         }
     }
-    
+
     return 0;
 }
