@@ -20,7 +20,7 @@ using namespace std;
 
 int main()
 {
-    int level = 1;
+    int level = 0;
     bool end = false;
     int currentMenu = 1;
     Rand rand;
@@ -33,83 +33,88 @@ int main()
 
     Player player("Assets/Text-Images/Player/player.txt");
     int numberRewardLevel = 0;
+    string sqmImage;
 
     while (!end)
     {
         switch (currentMenu)
         {
-        case 1: // Starting
-        {
-            Essentials::Clear();
-            startingScreen.RenderImageText();
-            bool mainMenuIsOpen = true;
-            int mainMenu;
-
-            string options[2] = {
-                "Ver inventário\n", 
-                "Continuar\n",
-            };
-
-            while(mainMenuIsOpen){
-                cout << "\n   Comandos:\n";
-                for (size_t i = 0; i < 2; i++)
-                {
-                    cout << "   - " << i << " " << options[i];
-                }
-
-                Essentials::Command<int>("\n- Opcao: ", mainMenu);
-                mainMenuIsOpen = false;
-            }
-
-            switch (mainMenu)
+            case 1: // Starting
             {
-                case 0: 
-                {
-                    currentMenu = 6;
-                    continue;
+                Essentials::Clear();
+                if(sqmImage.empty()){
+                    startingScreen.RenderImageText(); 
                 }
-                case 1:
+                else{
+                    Essentials::RenderImageText(sqmImage);
+                }
+                bool mainMenuIsOpen = true;
+                int mainMenu;
+
+                string options[2] = {
+                    "Ver inventário\n", 
+                    "Continuar\n",
+                };
+
+                while(mainMenuIsOpen){
+                    cout << "\n   Comandos:\n";
+                    for (size_t i = 0; i < 2; i++)
+                    {
+                        cout << "   - " << i << " " << options[i];
+                    }
+
+                    Essentials::Command<int>("\n- Opcao: ", mainMenu);
+                    mainMenuIsOpen = false;
+                }
+
+                switch (mainMenu)
                 {
-                    if(numberReward == 1){
-                        currentMenu = 2;
+                    case 0: 
+                    {
+                        currentMenu = 6;
                         continue;
                     }
-                    int rewardRef = 2 + numberRewardLevel;
+                    case 1:
+                    {
+                        if(numberReward == 1){
+                            currentMenu = 2;
+                            continue;
+                        }
+                        int rewardRef = 2 + numberRewardLevel;
+                        cout << "Reward ref " << rewardRef << endl;
+                        cout << "Reward count " << numberReward << endl;
 
-                    if(numberReward == 2 || (numberReward ==  rewardRef && numberRewardLevel > 0)){
-                        numberRewardLevel = numberReward;
+                        if(numberReward == 2 || (numberReward ==  rewardRef && numberRewardLevel > 0)){
+                            numberRewardLevel = numberReward;
 
-                        string optScreens[9] = {
-                            "wood-house.txt",
-                            "montain-house-type-1,txt",
-                            "montain-house-type-2.txt",
-                            "japonese-house.txt",
-                            "default-house-type-1.txt",
-                            "default-house-type-2.tzt",
-                            "default-house-type-3.txt",
-                            "default-house-type-4.txt",
-                            "caslte.txt",
-                        };
+                            string optScreens[9] = {
+                                "wood-house.txt",
+                                "montain-house-type-1,txt",
+                                "montain-house-type-2.txt",
+                                "japonese-house.txt",
+                                "default-house-type-1.txt",
+                                "default-house-type-2.tzt",
+                                "default-house-type-3.txt",
+                                "default-house-type-4.txt",
+                                "caslte.txt",
+                            };
 
-                        int randomIndex = std::rand() % 9;
+                            int randomIndex = std::rand() % 9;
+                            sqmImage = "Assets/Text-Images/Scenes/" + optScreens[randomIndex];
 
-                        Essentials::RenderImageText("Assets/Text-Images/Scenes/" + optScreens[randomIndex]);
-
-                        level++;
-
+                            level++; 
+                        }
+                        bool isBattle = Rand::RandomChance(50);
+                        if(isBattle){
+                            currentMenu = 2;
+                            continue;
+                        }
+                        currentMenu = 3;
+                        numberReward++;
+                        continue;
                     }
-                    bool isBattle = Rand::RandomChance(50);
-                    if(isBattle){
-                         currentMenu = 2;
-                         continue;
-                    }
-                    currentMenu = 3;
-                    numberReward++;
-                    continue;
-                }
-            } 
-            
-            Essentials::Pause(); 
+             }
+
         }
         break;
 
@@ -247,10 +252,19 @@ int main()
                 {
 
                 }
+              
+            
+
                 break;
-                }
             }
+
+         
+
         }
+            currentMenu = 3;
+            numberReward++;
+            break;
+    }
         break;
 
         case 3: // Reward
@@ -279,7 +293,7 @@ int main()
 
                 if (items.Size() == 0)
                 {
-                    cout << "Ops, Você nao encontrou nenhum item.\n";
+                    cout << "Ops, Voce nao encontrou nenhum item.\n";
                     Essentials::Pause();
                     rewardIsOpen = false;
                     break;
