@@ -20,7 +20,7 @@ using namespace std;
 
 int main()
 {
-    int level = 0;
+    int level = 1;
     bool end = false;
     int currentMenu = 1;
     Rand rand;
@@ -33,7 +33,7 @@ int main()
 
     Player player("Assets/Text-Images/Player/player.txt");
     int numberRewardLevel = 0;
-    string sqmImage;
+    string sqmImage = "";
 
     while (!end)
     {
@@ -42,7 +42,8 @@ int main()
             case 1: // Starting
             {
                 Essentials::Clear();
-                if(sqmImage.empty()){
+
+                if(sqmImage == ""){
                     startingScreen.RenderImageText(); 
                 }
                 else{
@@ -119,10 +120,9 @@ int main()
         break;
 
         case 2: // Figthing
-        {
-
-            player.SetLevel(level, player);
+        {  
             int health = rand.Randomize(20, 40);
+ 
             int damage = rand.Randomize(10, 20);
             bool endFight = false;
             int numberActions = 0;
@@ -131,6 +131,7 @@ int main()
                     "Defender!\n",
                     "Sair do jogo\n",
             };
+            cout << "Entrou aq 134: "  << endl;
 
 
             int action = -1;
@@ -246,21 +247,9 @@ int main()
                     action = -1;
                     continue;
                 }
-                break;
-                // case inventory
-                case 3:
-                {
-
-                }
-              
-            
-
-                break;
-            }
-
-         
-
-        }
+                break; 
+            } 
+        } 
             currentMenu = 3;
             numberReward++;
             break;

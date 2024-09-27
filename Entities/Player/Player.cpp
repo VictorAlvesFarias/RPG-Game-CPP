@@ -12,7 +12,8 @@ Player::Player(string imageTextPath)
 Player::Player(int health, int damage, string imageTextPath){
     EnemyHealth = health;
     EnemyDamage = damage;
-    ImageTextPath = imageTextPath;
+    ImageTextPath = imageTextPath; 
+
 }
 
 Player::Player(int health, int damage) {
@@ -124,17 +125,7 @@ bool Player::GetItemToBelt()
 
             return true;
         }
-
-        // If the inventory use list structure and show the list items 
-        // Item item = Backpack.Get(Backpack.Size() - 1);
-
-        // if (Belt.Size() < BeltSlots)
-        // {
-        //     Belt.Push(item);
-        //     Backpack.Delete(Backpack.Size() - 1);
-
-        //     return true;
-        // }
+ 
 
         return false;
     }
@@ -145,8 +136,12 @@ bool Player::GetItemToBelt()
 }
 
 void Player::SetLevel(int level, Player player) {
+    cout << "entrou setlevel" << endl;
+
     player.Health += 2*level;
     player.Damage += 2*level;
+        cout << "saindo setlevel" << endl;
+
 }
 
 void Player::Atack(Player& enemy) {
