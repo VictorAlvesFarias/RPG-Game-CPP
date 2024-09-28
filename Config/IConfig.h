@@ -10,5 +10,6 @@ class Config{
     public: const static int BattleChace = 50;
     public: const static int Bonus = 10;
     public: const static int MaxRewards = 10;
+    public: const static int PlayerActions = 2;
     public: const static Item items[50];
 };
