@@ -158,7 +158,7 @@ int main()
                     break;
                 }
                 break;
-                case 2:
+                case 1:
                 {
                     if (Rand::RandomChance(40) && numberActions < Config::PlayerActions) // player defense
                     {
