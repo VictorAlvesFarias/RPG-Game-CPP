@@ -9,6 +9,7 @@
 #include "Screens/BaseScreen/BaseScreen.cpp"
 #include "Entities/BaseEntity/BaseEntity.cpp"
 #include "Screens/StartingScreen.cpp"
+#include "Screens/EndingScreen.cpp"
 #include "Screens/SqmScreen.cpp"
 #include "Screens/PlayerStatusScreen.cpp"
 #include "Screens/EnemyStatusScreen.cpp"
@@ -30,9 +31,9 @@ int main()
     int rewardContext = 0;
 
     RewardService reward;
-    
-    
+
     StartingScreen startingScreen;
+    EndingScreen endingScreen;
     PlayerStatusScreen playerStatusScreen;
     EnemyStatusScreen enemyStatusScreen;
     ItemStatusScreen itemStatusScreen;
@@ -59,7 +60,6 @@ int main()
         "Assets/Text-Images/Scenes/caslte.txt",
     };
     string sqmImage = screens[Rand::Randomize(0, 9)];
-
 
     while (!end)
     {
@@ -96,6 +96,22 @@ int main()
             while (!endFight)
             {
                 Essentials::Clear();
+                if (player.Health <= 0)
+                {
+                    cout << "O heroi foi derrotado";
+                    endingScreen.RenderImageText();
+                    endFight = true;
+                    Essentials::Pause();
+                    abort();
+                }
+
+                if (enemy.Health < 0)
+                {
+                    cout << "O inimigo foi derrotado!";
+                    endFight = true;
+                    currentMenu = 3;
+                    continue;
+                }
 
                 enemy.RenderImageText();
                 playerStatusScreen.RenderImageText(player);
@@ -121,48 +137,24 @@ int main()
                 {
                     if (numberActions == 2)
                     {
-                        if (enemy.Health <= 0)
-                        {
-                            cout << "O inimigo foi derrotado!" << endl;
-
-                            endFight = true;
-                            currentMenu = 3;
-
-                            continue;
-                        }
 
                         int chance = (enemy.GetMaxHealth() - enemy.Health);
+                        int enemyDamageAtack = enemy.Atack(player);
 
-                        if (Rand::RandomChance(chance * 2))
+                        cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
+
+                        if (Rand::RandomChance(50))
+                        {
+                            int enemyDamageAtack = enemy.Atack(player);
+                            cout << "O inimigo te atacou novamente e causou: " << enemyDamageAtack << " de dano" << endl;
+                        }
+                        else if (Rand::RandomChance(enemy.GetMaxHealth() - enemy.Health) && numberActions < 2)
                         {
                             enemy.HealLife((enemy.GetMaxHealth() - enemy.Health) / 3);
                             cout << (enemy.GetMaxHealth() - enemy.Health) / 3;
                         }
-                        else
-                        {
-                            int enemyDamageAtack = enemy.Atack(player);
-                            cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
 
-                            if (player.Health < 0)
-                            {
-                                cout << "O heroi foi derrotado" << endl;
-                                endFight = true;
-                            }
-
-                            if (Rand::RandomChance(50))
-                            {
-
-                                int enemyDamageAtack = enemy.Atack(player);
-                                cout << "O inimigo te atacou novamente e causou: " << enemyDamageAtack << " de dano" << endl;
-
-                                if (player.Health < 0)
-                                {
-                                    cout << "O heroi foi derrotado";
-                                    endFight = true;
-                                }
-                            }
-                        }
-
+                        Essentials::Pause();
                         numberActions = 0;
                     }
                     else
@@ -170,14 +162,6 @@ int main()
                         int playerDamageAtack = player.Atack(enemy);
                         cout << "Você atacou o inimigo e causou: " << playerDamageAtack << " de dano" << endl;
                         numberActions++;
-
-                        if (enemy.Health < 0)
-                        {
-                            cout << "O inimigo foi derrotado!";
-                            endFight = true;
-                            currentMenu = 3;
-                            continue;
-                        }
                     }
 
                     action = -1;
@@ -190,19 +174,19 @@ int main()
                     {
                         cout << "O heroi conseguiu defender o ataque!" << endl;
                         action = -1;
-                        continue;
                     }
-
-                    cout << "O heroi não conseguiu denfender!";
-                    int enemyDamageAtack = enemy.Atack(player);
-                    cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
-
-                    if (player.Health < 0)
+                    else
                     {
-                        cout << "O heroi foi derrotado";
-                        endFight = true;
+                        int enemyDamageAtack = enemy.Atack(player);
+
+                        cout << "O heroi não conseguiu denfender!";
+                        cout << "O inimigo te atacou e causou: " << enemyDamageAtack << " de dano" << endl;
+
+                        action = -1;
                     }
-                    action = -1;
+
+                    Essentials::Pause();
+
                     continue;
                 }
                 break;

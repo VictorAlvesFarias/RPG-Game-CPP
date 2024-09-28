@@ -13,7 +13,7 @@ class Player : public BaseEntity {
         int MaxHealth = 1000;
         int Health = 0;
         int Level = 1000;
-        int Damage = 10;
+        int Damage = 100;
         int BeltSlots = 10;
         List<Item> Belt;
         Stack<Item> Backpack;
