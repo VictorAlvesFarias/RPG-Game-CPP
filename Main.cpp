@@ -18,8 +18,7 @@
 #include "Entities/Player/Player.cpp"
 #include "Entities/Sqm/Sqm.cpp"
 #include "Services/Reward/RewardService.cpp"
-
-using namespace std;
+#include <iostream>
 
 int main()
 {
@@ -31,7 +30,6 @@ int main()
     int rewardContext = 0;
 
     RewardService reward;
-
     StartingScreen startingScreen;
     EndingScreen endingScreen;
     PlayerStatusScreen playerStatusScreen;
@@ -155,15 +153,15 @@ int main()
                     action = -1;
 
                     continue;
-                    break;
                 }
                 break;
-                case 1:
+                case 2:
                 {
                     if (Rand::RandomChance(40) && numberActions < Config::PlayerActions) // player defense
                     {
                         cout << "\n- Seu Turno:\n";
                         cout << "\n- O heroi conseguiu defender o ataque!" << endl;
+                        enemyActions++;
                         action = -1;
                     }
                     else
@@ -193,11 +191,8 @@ int main()
                                 Essentials::Pause();
 
                                 enemyActions++;
-
-                                continue;
                             }
                         }
-
                         else if (Rand::RandomChance(enemy.GetMaxHealth() - enemy.Health) && numberActions < Config::PlayerActions) // Enemy heal
                         {
                             int healValue = Rand::Randomize(0, (enemy.GetMaxHealth() - enemy.Health) / 3);
@@ -206,16 +201,20 @@ int main()
                             {
                                 cout << "\n- O inimigo se curou em: " << healValue << " pontos de vida" << endl;
                             }
-
                             enemy.HealLife(healValue);
+
                             Essentials::Pause();
+
+                            enemyActions++;
                         }
+
+                        enemyActions = 0;
                     }
+
                     numberActions = 0;
                     action = -1;
 
                     continue;
-                    ;
                 }
                 break;
                 }
@@ -225,8 +224,8 @@ int main()
 
                 break;
             }
-            break;
         }
+        break;
 
         case 3: // Reward
         {
